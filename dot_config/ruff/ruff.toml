@@ -1,0 +1,18 @@
+line-length = 120
+target-version = "py312"
+extend-exclude = ["migrations", ".venv"]
+
+[format]
+quote-style = "double"          # double | single | preserve
+indent-style = "space"          # space | tab
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true    # 格式化 docstring 里的代码块
+docstring-code-line-length = "dynamic"
+
+[lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]               # 交给 formatter 管行宽
+
+[lint.isort]
+known-first-party = ["myapp"]

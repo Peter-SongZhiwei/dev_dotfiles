@@ -1,0 +1,12 @@
+[opener]
+edit = [ # nvim打开
+    { run = 'nvim "$@"', block = true, desc = "Edit"}
+]
+
+[open]
+prepend_rules = [
+    { mime = "*", use = "edit"}
+]
+
+[mgr]
+linemode = "owner"

@@ -1,0 +1,117 @@
+# ========================================
+#  guard & functions
+# ========================================
+# If not running interactively, don't do anything
+case $- in
+*i*) ;;
+*) return ;;
+esac
+
+echo '.bashrc ran'
+
+# 头上添加
+path_add() {
+  case ":$PATH:" in
+    *":$1:"*) ;;
+    *) PATH="$1:$PATH" ;;
+  esac
+}
+
+# LD_LIBRARY_PATH必须export增加导出标记 才能传递给子进程
+ld_libary_path_add() {
+  case ":$LD_LIBRARY_PATH:" in
+    *":$1:"*) ;;
+    *) export LD_LIBRARY_PATH="$1:$LD_LIBRARY_PATH" ;;
+  esac
+}
+# ========================================
+#  user shell configuration
+# ========================================
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# User specific environment
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+then
+    path_add "$HOME/.local/bin"
+    path_add "$HOME/bin"
+fi
+
+if ! [[ "$PATH" =~ "$HOME/.local/lib/node_modules:" ]]
+then
+    path_add "$HOME/.local/lib/node_modules"
+fi
+
+export PATH
+export EDITOR="nvim"
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+# 每次执行prompt -r 读 history
+# export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
+
+# shell option
+shopt -s autocd     # 路径自动cd
+shopt -s cdspell    # 自动纠正小拼写错误
+
+# ========================================
+#  ZTE export
+# ========================================
+# co-mind cli
+# 敏感密钥独立存放于 ~/.bash_secrets（不受 chezmoi 管理，权限600）
+[ -f ~/.bash_secrets ] && source ~/.bash_secrets
+# opencode
+unset TMOUT
+export TORCH_DEVICE_BACKEND_AUTOLOAD=0 # 关闭 torch_lpu
+ld_libary_path_add "/usr/local/mpi/lib"
+path_add "/usr/local/mpi/bin"
+
+# export ETHER_SDK_PATH=/home/zte/lpu_config/daily_e200a_cgsl_x86_gcc8_20260916000000
+#export ETHER_SDK_PATH=/home/zte/lpu_config/evas_e200_sdk_cgsl_x86_gcc8_0.2.3.41_bugfix
+export ETHER_SDK_PATH=/home/zte/lpu_config/epoch-evas_e200_sdk_cgsl_x86_gcc8_0.2.6.61_release
+path_add "$ETHER_SDK_PATH/base_env/hgss/bin"
+export ESDK_PATH=$ETHER_SDK_PATH
+export ClANG_18=$ETHER_SDK_PATH/base_env/hgss/bin
+ld_libary_path_add "$ETHER_SDK_PATH/base_env/hgss/lib"
+ld_libary_path_add "/usr/local/python3.10/lib"
+export RISCV_HGSS=$ETHER_SDK_PATH/base_env/hgss
+export VISA_PATH=$ETHER_SDK_PATH/application/visa
+
+export https_proxy=http://127.0.0.1:1080
+export http_proxy=http://127.0.0.1:1080
+# opencode不走代理配置
+export no_proxy="mirrors.zte.com.cn,127.0.0,1,localhost,::1"
+
+# ========================================
+#  tools initiation && configuration 
+# ========================================
+FZF_CRTL_T_COMMAND=
+eval "$(fzf --bash)"
+export FZF_DEFAULT_OPTS='--height 40% --layout=default --info=inline'
+
+# starship只初始化一次
+if [[ -z "${__STARSHIP_INITIALIZED:-}" ]]; then
+    eval "$(starship init bash)"
+    __STARSHIP_INITIALIZED=1
+fi
+eval "$(zoxide init bash)" # zoxide放到最后
+
+source ~/.bash_aliases
+# 加载 fzf 的 key bindings 和补全
+source ~/.config/fzf/key-bindings.bash
+source ~/.config/fzf/completion.bash
+
+# 禁用 fzf Ctrl-T 文件搜索（保留 Ctrl-R 历史搜索、Alt-C 目录跳转）
+# 将 Ctrl-T 恢复为 bash 默认的 transpose-chars，并清除 vi 各模式下的 fzf 绑定
+bind -m emacs-standard '"\C-t": transpose-chars'
+bind -m vi-insert -r "\C-t" 2>/dev/null
+bind -m vi-command -r "\C-t" 2>/dev/null
+
+# opencode tui 解压到/tmp再dlopen /tmp为noexec
+export TMPDIR=~/.cache/tmp
+
+. "$HOME/.cargo/env"
+
+# opencode
+export PATH=/home/zte/.opencode/bin:$PATH

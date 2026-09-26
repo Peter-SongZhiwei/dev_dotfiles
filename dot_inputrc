@@ -1,0 +1,25 @@
+# inputrc修改需要重新登录bash
+# 允许输入 8 位字符
+set input-meta on
+set convert-meta off
+set output-meta on
+
+set completion-ignore-case on
+
+# 控制 Ctrl+方向键 移动
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+
+# 控制 Alt+方向键 移动 (处理你遇到的 ;5D 等情况)
+"\e[1;3C": forward-word
+"\e[1;3D": backward-word
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+
+# 开启菜单补全：按 Tab 时，从列表中依次选择并填入命令行
+# set menu-complete-display-prefix on
+# TAB: menu-complete
+# # 可选：反向遍历（Shift+Tab）
+# "\e[Z": menu-complete-backward

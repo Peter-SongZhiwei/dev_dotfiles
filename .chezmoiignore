@@ -1,0 +1,5 @@
+# 敏感密钥（本地独立管理，永不入库）
+.bash_secrets
+.config/opencode/service.json
+# VSCode Server 运行时数据（非配置，频繁变动）
+.config/Code
