@@ -1,0 +1,806 @@
+{
+	"terminal.integrated.shellIntegration.enabled": true, // 和starship init冲突
+	"security.workspace.trust.untrustedFiles": "open",
+	"update.mode": "none",
+	"gitlens.proxy": {},
+	"gitlens.home.preview.enabled": false,
+	"window.zoomLevel": -1,
+	"update.enableWindowsBackgroundUpdates": false,
+	"terminal.integrated.suggest.enabled": true,
+	"terminal.integrated.stickyScroll.enabled": true,
+	"terminal.integrated.fontLigatures.enabled": true,
+	"terminal.integrated.persistentSessionScrollback": 20000,
+	"diffEditor.ignoreTrimWhitespace": false,
+	"files.associations": {
+		"*.ac": "cpp",
+		"*.toml": "toml"
+	},
+	"gitlens.plusFeatures.enabled": false,
+	"extensions.experimental.affinity": {
+		"vscodevim.vim": 1
+	},
+	// by szw
+	//-------------------------------
+	//		 Appearance   		  ---
+	//-------------------------------
+	"workbench.colorCustomizations": {
+		// 1. 当前选中的匹配单词（调暗一点或者换个颜色）
+		"editor.findMatchBackground": "#1064feff",
+		// 2. 其他匹配单词（调亮一点，增加透明度）
+		"editor.findMatchHighlightBackground": "#80209fb5"
+	},
+	"workbench.colorTheme": "Cyber '77",
+	"editor.guides.bracketPairs": "active", // 括号范围横向和竖向提示线（vscode默认缩进有提示线）
+	// 拼写错误提示：三个点（默认波浪线）
+	"editor.formatOnSave": true, // 保存自动格式化
+	"cSpell.diagnosticLevel": "Hint",
+	"editor.stickyScroll.enabled": true, // 粘性滚动 多层级头悬浮
+	"editor.stickyScroll.maxLineCount": 8,
+	"editor.lineNumbers": "on", // 相对行号 relative
+	"editor.fontFamily": "Maple Mono NF CN",
+	"editor.fontWeight": "400", // 400 Regular 必须安装对应字重 Regular Bold
+	"editor.fontLigatures": true,
+	// "terminal.integrated.fontFamily": "RecMonoCasual Nerd Font Mono",
+	//-------------------------------
+	//			 Editor   		  ---
+	//-------------------------------
+	"[python]": {
+		"editor.defaultFormatter": "charliermarsh.ruff",
+		"editor.formatOnSave": false,
+		"editor.formatOnPaste": false
+	},
+	// dictionary Completion：支持编程语言内补全
+	"dictCompletion.programmingLanguage": true,
+	"[cpp]": {
+		// 支持.clang-format
+		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+		"editor.quickSuggestions": {
+			"other": "on",
+			"comments": "on", // 只有comment支持 dictionary
+			"strings": "on"
+		}
+	},
+	"C_Cpp.clang_format_fallbackStyle": "Google",
+	"editor.semanticHighlighting.enabled": true,
+	"editor.semanticTokenColorCustomizations": {
+		"enabled": true,
+		"rules": {
+			// ── 类型:粗体 ──
+			"class": {
+				"bold": true
+			},
+			"enum": {
+				"bold": true
+			},
+			"type": {
+				"bold": true
+			},
+			"concept": {
+				"bold": true,
+				"italic": true
+			},
+			"typeParameter": {
+				"bold": true,
+				"italic": true
+			}, // 模板参数
+			// ── 静态成员:下划线 ──
+			"macro": {
+				"underline": true,
+				"bold": true,
+				"foreground": "#655297"
+			},
+			"variable.static": {
+				"underline": true
+			},
+			"property.static": {
+				"underline": true
+			},
+			"method.static": {
+				"underline": true
+			},
+			// ── 变量:普通 ──
+			"variable": {
+				"bold": false,
+				"italic": true,
+				"foreground": "#e9ece7"
+			},
+			"unknown": {
+				"bold": false,
+				"italic": false,
+				"foreground": "#e9ece7"
+			},
+			"parameter": {
+				"italic": true
+			},
+			// ── 成员:斜体 ──
+			"property": {
+				"italic": true
+			},
+			"method": {
+				"bold": false
+			},
+			// ── 只读/常量 ──
+			"variable.readonly": {
+				"bold": false,
+				"foreground": "#4FC1FF"
+			},
+			"enumMember": {
+				"foreground": "#4FC1FF"
+			},
+			// ── 虚函数:斜体 ──
+			"method.virtual": {
+				"italic": true
+			},
+			// ── 命名空间:普通 ──
+			"namespace": {
+				"bold": true,
+				"italic": false,
+				"foreground": "#9CDCFE"
+			},
+			// ── 非活跃预处理区:变暗 ──
+			"comment": {
+				"foreground": "#6A6A6A"
+			}
+		}
+	},
+	//-------------------------------
+	//			 vim	   		  ---
+	//-------------------------------
+	"vim.surround": true,
+	"vim.scroll": 15,
+	"vim.highlightedyank.enable": true, // yank高亮
+	// by zyy
+	"vim.sneak": true,
+	"vim.showMarksInGutter": true,
+	// "vim.smartRelativeLine": false, // 相对行号 true
+	"vim.useSystemClipboard": true,
+	"vim.leader": "<space>",
+	"vim.substitutionTextColor": "#CBA6F7",
+	// "vim.enableNeovim": true,
+	//----------------------------------------------------------
+	//			 vim keyboard shortcuts 				 	 ---
+	//----------------------------------------------------------
+	// 禁用vim默认快捷键 恢复vscode快捷键功能
+	"vim.handleKeys": {
+		// 禁用之后 vscode vim 不能捕获快捷键 重新配置只能写在keybingdings.json
+		// vim默认注册ctrl-d ctrk-u等按键 when:vim.active 
+		// 比keybindings中editorTextFocus更具体 vim优先级更高 导致vscode自定义命令被拦截 
+		"<C-o>": false, // 使用vscode跳转替代（原：跳回上个位置 older）
+		"<C-i>": false, // 使用vscode跳转替代（原：跳回下个位置 newer）
+		"<C-z>": false,
+		"<C-f>": false, // 和搜索冲突 （原：向下翻页）
+		"<C-b>": false, // 和打开vscode side bar冲突 （原：为向上翻页）
+		"<C-w>": false, // 和关闭tab冲突
+		"<C-t>": false, // 和关闭tab冲突
+	},
+	// 组合键：<S-x> 或 s-x: shift <C-x> 或 c-x: ctrl
+	"vim.normalModeKeyBindingsNonRecursive": [
+		// by szw 
+		{ // 复制到行末尾不包含换行符
+			"before": [
+				"Y"
+			],
+			"after": [
+				"y",
+				"$"
+			]
+		},
+		{ // 移到行首
+			"before": [
+				"<C-a>",
+			],
+			"after": [
+				"^"
+			]
+		},
+		{
+			"before": [
+				"<C-e>",
+			],
+			"after": [
+				"$"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"o",
+			],
+			"commands": [
+				"workbench.action.quickOpen"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<leader>",
+				"x"
+			],
+			"commands": [
+				"workbench.action.files.save",
+				"workbench.action.closeActiveEditor"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"v"
+			],
+			"after": [
+				"v",
+				"i",
+				"w"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<leader>",
+				"y"
+			],
+			"after": [
+				"v",
+				"i",
+				"w",
+				"y"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<leader>",
+				"b"
+			],
+			"commands": [
+				"workbench.action.toggleSidebarVisibility"
+			]
+		},
+		{ // 删除到末尾 存入黑洞寄存器
+			"before": [
+				"D"
+			],
+			"after": [
+				"\"",
+				"_",
+				"D"
+			]
+		},
+		{ // 删除 存入黑洞删除
+			"before": [
+				"<leader>",
+				"d"
+			],
+			"after": [
+				"\"", // 转义" "_表示使用黑洞寄存器
+				"_",
+				"d"
+			]
+		},
+		{ // x进黑洞寄存器 _"
+			"before": [
+				"x"
+			],
+			"after": [
+				"\"",
+				"_",
+				"x"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<leader>",
+				"s"
+			],
+			"commands": [
+				"editor.action.triggerSuggest"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"w"
+			],
+			"commands": [
+				"workbench.action.files.saveAll"
+			]
+		},
+		// by zzy
+		{
+			"before": [
+				"H"
+			],
+			"commands": [
+				"workbench.action.previousEditor"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"L"
+			],
+			"commands": [
+				"workbench.action.nextEditor"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<leader>",
+				"f",
+				"g"
+			],
+			"commands": [
+				"workbench.action.quickTextSearcr"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<leader>",
+				"f",
+				"s"
+			],
+			"commands": [
+				"workbench.action.gotoSymbol"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<leader>",
+				"f",
+				"f"
+			],
+			"commands": [
+				"workbench.action.quickOpen"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<leader>",
+				"a"
+			],
+			"commands": [
+				"editor.action.quickFix"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<leader>",
+				"r"
+			],
+			"commands": [
+				"editor.action.rename"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"g",
+				"r"
+			],
+			"commands": [
+				"editor.action.goToReferences"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"g",
+				"p",
+				"d"
+			],
+			"commands": [
+				"editor.action.peekDefinition"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"g",
+				"p",
+				"r"
+			],
+			"commands": [
+				"editor.action.referenceSearch.trigger"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"g",
+				"d"
+			],
+			"commands": [
+				"editor.action.revealDefinition"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"g",
+				"D"
+			],
+			"commands": [
+				"editor.action.revealDefinitionAside"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<leader>",
+				"="
+			],
+			"commands": [
+				"editor.action.formatDocument"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"[",
+				"g"
+			],
+			"commands": [
+				"workbench.action.editor.previousChange",
+				"workbench.action.compareEditor.previousChange"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"]",
+				"g"
+			],
+			"commands": [
+				"workbench.action.editor.nextChange",
+				"workbench.action.compareEditor.nextChange"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"[",
+				"d"
+			],
+			"commands": [
+				"editor.action.marker.prev"
+			],
+			"silent": true
+		},
+		{
+			"before": [ // 下一个错误标记
+				"]",
+				"d"
+			],
+			"commands": [
+				"editor.action.marker.next"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<leader>",
+				"n",
+				"f"
+			],
+			"commands": [
+				"workbench.explorer.fileView.focus"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"K"
+			],
+			"commands": [
+				"editor.action.showDefinitionPreviewHover"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				">"
+			],
+			"commands": [
+				"editor.action.indentLines"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<"
+			],
+			"commands": [
+				"editor.action.outdentLines"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"s"
+			],
+			"commands": [
+				"flash-vscode.start"
+			]
+		},
+		{
+			"before": [
+				"S"
+			],
+			"commands": [
+				"flash-vscode.startSelection"
+			]
+		},
+		{
+			"before": [
+				"<BS>"
+			],
+			"commands": [
+				"flash-vscode.backspace"
+			]
+		},
+	],
+	"vim.insertModeKeyBindingsNonRecursive": [
+		{
+			"before": [
+				"c-j"
+			],
+			"commands": [
+				"editor.action.triggerSuggest"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"c-k"
+			],
+			"commands": [
+				"editor.action.triggerParameterHints"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"c-v"
+			],
+			"commands": [
+				"editor.action.clipboardPasteAction" // 支持c-v 到 / 命令行 默认支持
+			],
+			"silent": true
+		}
+	],
+	"vim.visualModeKeyBindingsNonRecursive": [
+		// by szw
+		{ // 选中
+			"before": [
+				"<leader>",
+				"f",
+				"w"
+			],
+			"after": [
+				"y",
+				"/",
+				"<C-r>",
+				"\""
+			]
+		},
+		{ // paste same 复制空一行在下面复制一份
+			"before": [
+				"<leader>",
+				"p",
+				"p"
+			],
+			"after": [
+				"\"",
+				"a",
+				"y",
+				"`",
+				">",
+				"o",
+				"<Esc>",
+				"\"",
+				"a",
+				"p"
+			]
+		},
+		{ // paste comment 复制并注释选中内容 空一行在下面复制一份
+			"before": [
+				"<leader>",
+				"p",
+				"c"
+			],
+			"after": [
+				"\"",
+				"a",
+				"y",
+				"g",
+				"v",
+				"g",
+				"c",
+				"`",
+				">",
+				"o",
+				"<Esc>",
+				"\"",
+				"a",
+				"p"
+			]
+		},
+		{ // 前后增加括号 搭配 vim.surround：visual选中 + (
+			"before": [
+				"("
+			],
+			"after": [
+				"S",
+				")"
+			]
+		},
+		{
+			"before": [
+				"\""
+			],
+			"after": [
+				"S",
+				"\""
+			]
+		},
+		{
+			"before": [
+				"["
+			],
+			"after": [
+				"S",
+				"["
+			]
+		},
+		{
+			"before": [
+				"{"
+			],
+			"after": [
+				"S",
+				"{"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"d"
+			],
+			"after": [
+				"\"",
+				"_",
+				"d"
+			]
+		},
+		// by zyy
+		{
+			"before": [
+				"<leader>",
+				"=",
+				"="
+			],
+			"commands": [
+				"editor.action.formatSelection"
+			],
+			"silent": true
+		},
+		{ // 粘贴 重新选中之前区域复制 避免覆盖寄存器
+			"before": [
+				"p",
+			],
+			"after": [
+				"p",
+				"g",
+				"v",
+				"y"
+			]
+		},
+		{
+			"before": [
+				">"
+			],
+			"commands": [
+				"editor.action.indentLines"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"<"
+			],
+			"commands": [
+				"editor.action.outdentLines"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"J"
+			],
+			"commands": [
+				"editor.action.moveLinesDownAction"
+			],
+			"silent": true
+		},
+		{
+			"before": [
+				"K"
+			],
+			"commands": [
+				"editor.action.moveLinesUpAction"
+			],
+			"silent": true
+		},
+	],
+	//-------------------------------
+	//		 	Tools   		  ---
+	//-------------------------------
+	"icodemate.complete.enabled": false,
+	"workbench.editor.limit.enabled": true,
+	"workbench.editor.limit.value": 10,
+	"terminal.integrated.scrollback": 20000,
+	"workbench.editorAssociations": {
+		"{hexdiff}:/**/*.*": "hexEditor.hexedit",
+		"*.bin": "hexEditor.hexedit",
+		"*.bin@": "hexEditor.hexedit",
+		"*.bin\u0001$": "hexEditor.hexedit",
+		"*.bin\u0001": "hexEditor.hexedit",
+		"*.bin\u0006$": "hexEditor.hexedit"
+	},
+	"gitlens.views.commitDetails.files.layout": "list",
+
+	"better-todo-tree.highlights.customHighlight": {
+		"NOTE": {
+			"foreground": "black",
+			"background": "yellow",
+			"iconColour": "yellow",
+			"gutterIcon": true,
+			"icon": "info",
+			"type": "text-and-comment"
+		},
+		"TODO": {
+			// "foreground": "black",
+			// "background": "white",
+			"icon": "tasklist",
+			"gutterIcon": true,
+			// "iconColour": "white",
+			"type": "text-and-comment"
+		},
+		"FIXME": {
+			"foreground": "white",
+			"background": "purple",
+			"iconColour": "purple",
+			"gutterIcon": true,
+			"type": "text-and-comment"
+		},
+	},
+	"better-todo-tree.general.tags": [
+		"BUG",
+		"HACK",
+		"FIXME",
+		"TODO",
+		"XXX",
+		"[ ]",
+		"[x]",
+		"NOTE",
+	],
+	"hexeditor.columnWidth": 16,
+	"hexeditor.showDecodedText": true,
+	"hexeditor.defaultEndianness": "little",
+	"hexeditor.inspectorType": "aside",
+	"workbench.secondarySideBar.defaultVisibility": "hidden",
+	"editor.pasteAs.preferences": [],
+	"C_Cpp.intelliSenseEngine": "disabled",
+	// code spell checker 自定义字典
+	"cSpell.userWords": [
+		"LUTLASS"
+	],
+	"chat.viewSessions.orientation": "stacked",
+	"markdown-preview-enhanced.previewTheme": "github-dark.css",
+	"chat.disableAIFeatures": true,
+}
