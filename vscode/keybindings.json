@@ -1,0 +1,401 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+	// ------------------------------------
+	//	 by szw 						---
+	// ------------------------------------
+	{ // 删除当前 terminal tab
+		"key": "ctrl+t",
+		"command": "workbench.action.terminal.new",
+		"when": "terminalFocus"
+	},
+	{ // 删除当前 terminal tab
+		"key": "ctrl+w",
+		"command": "workbench.action.terminal.kill",
+		"when": "terminalFocus"
+	},
+	{ // 跳转上个位置
+		"key": "ctrl+o",
+		"command": "workbench.action.navigateBack"
+	},
+	{ // 跳转下个位置
+		"key": "ctrl+i",
+		"command": "workbench.action.navigateForward"
+	},
+	{ // 侧边栏
+		"key": "ctrl+1",
+		"command": "workbench.action.toggleSidebarVisibility"
+	},
+	{
+		"key": "alt+v",
+		"command": "toggleVim"
+	},
+	{
+		"key": "ctrl+shift+a", // 选择全部
+		"command": "editor.action.selectAll",
+		"when": "editorTextFocus && vim.active"
+	},
+	{
+		"key": "ctrl+c", // 搭配任何时候复制
+		"command": "editor.action.clipboardCopyAction",
+		"when": "editorTextFocus && vim.active"
+	},
+	{
+		"key": "shift+alt+left",
+		"command": "-editor.action.smartSelect.shrink",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "shift+alt+right",
+		"command": "-editor.action.smartSelect.expand",
+		"when": "editorTextFocus"
+	},
+	// {
+	// 	"key": "alt+oem_4",
+	// 	"command": "-anySwap.backward",
+	// 	"when": "editorTextFocus && !editorReadonly"
+	// },
+	// {
+	// 	"key": "alt+oem_6",
+	// 	"command": "-anySwap.forward",
+	// 	"when": "editorTextFocus && !editorReadonly"
+	// },
+	{ // 搜索
+		"key": "ctrl+f",
+		"command": "actions.find",
+		"when": "editorFocus && editorIsOpen"
+	},
+	// {
+	// "key": "ctrl+f",
+	// "command": "closeFindWidget",
+	// "when": "editorFocus && editorIsOpen && findWidgetVisible"
+	// },
+	{
+		"key": "ctrl+shift+f",
+		"command": "editor.action.startFindReplaceAction",
+		"when": "editorFocus && editorIsOpen"
+	},
+	// ------------------------------------
+	//	 by zzy 						---
+	// ------------------------------------
+	{
+		"key": "shift+alt+c",
+		"command": "-copyFilePath",
+		"when": "!editorFocus"
+	},
+	{
+		"key": "shift+alt+c",
+		"command": "-copyFilePath",
+		"when": "editorFocus"
+	},
+	{
+		"key": "ctrl+alt+c",
+		"command": "copyRelativeFilePath",
+		"when": "!editorFocus"
+	},
+	{
+		"key": "ctrl+k ctrl+shift+c",
+		"command": "-copyRelativeFilePath",
+		"when": "!editorFocus"
+	},
+	{
+		"key": "ctrl+alt+c",
+		"command": "copyRelativeFilePath",
+		"when": "editorFocus"
+	},
+	{
+		"key": "ctrl+k ctrl+shift+c",
+		"command": "-copyRelativeFilePath",
+		"when": "editorFocus"
+	},
+	{
+		"key": "ctrl+e",
+		"command": "-workbench.action.quickOpen"
+	},
+	{
+		"key": "ctrl+shift+w",
+		"command": "-workbench.action.closeWindow"
+	},
+	{
+		"key": "ctrl+shift+w",
+		"command": "workbench.action.closeOtherEditors"
+	},
+	{
+		"key": "ctrl+shift+alt+c",
+		"command": "git.checkout"
+	},
+	{
+		"key": "ctrl+oem_comma",
+		"command": "-workbench.action.openSettings"
+	},
+	{
+		"key": "ctrl+shift+oem_comma", // - 表示取消
+		"command": "-editor.action.inPlaceReplace.up",
+		"when": "editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "f12",
+		"command": "editor.action.revealDefinitionAside",
+		"when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+	},
+	{
+		"key": "ctrl+k f12",
+		"command": "-editor.action.revealDefinitionAside",
+		"when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+	},
+	{
+		"key": "f12",
+		"command": "-editor.action.revealDefinition",
+		"when": "editorHasDefinitionProvider && editorTextFocus"
+	},
+	// by zzy
+	{
+		"key": "shift+a",
+		"command": "explorer.newFolder",
+		"when": "!editorFocus && !inputFocus && filesExplorerFocus"
+	},
+	{
+		"key": "a",
+		"command": "explorer.newFile",
+		"when": "!editorFocus && !inputFocus && filesExplorerFocus"
+	},
+	{
+		"key": "y",
+		"command": "filesExplorer.copy",
+		"when": "!editorFocus && !inputFocus && filesExplorerFocus"
+	},
+	{
+		"key": "c",
+		"command": "filesExplorer.cut",
+		"when": "!editorFocus && !inputFocus && filesExplorerFocus"
+	},
+	{
+		"key": "p",
+		"command": "filesExplorer.paste",
+		"when": "!editorFocus && !inputFocus && filesExplorerFocus"
+	},
+	{
+		"key": "d",
+		"command": "deleteFile",
+		"when": "!editorFocus && !inputFocus && filesExplorerFocus"
+	},
+	{
+		"key": "r",
+		"command": "renameFile",
+		"when": "!editorFocus && !inputFocus && filesExplorerFocus"
+	},
+	{
+		"key": "ctrl+j",
+		"command": "workbench.action.navigateDown",
+		"when": "vim.mode == 'Normal'"
+	},
+	{
+		"key": "ctrl+k",
+		"command": "workbench.action.navigateUp",
+		"when": "vim.mode == 'Normal'"
+	},
+	{
+		"key": "ctrl+l",
+		"command": "workbench.action.navigateRight",
+		"when": "vim.mode == 'Normal'"
+	},
+	{
+		"key": "ctrl+h",
+		"command": "workbench.action.navigateLeft",
+		"when": "vim.mode == 'Normal'"
+	},
+	{
+		"key": "q",
+		"command": "workbench.action.toggleSidebarVisibility",
+		"when": "vim.mode == 'Normal' && !editorFocus && !inputFocus"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "editor.action.pageUpHover",
+		"when": "editorHoverFocused"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "editor.action.pageDownHover",
+		"when": "editorHoverFocused"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "focusPreviousRenameSuggestion",
+		"when": "renameInputVisible"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "focusNextRenameSuggestion",
+		"when": "renameInputVisible"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "selectNextCodeAction",
+		"when": "codeActionMenuVisible"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "selectPrevCodeAction",
+		"when": "codeActionMenuVisible"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "quickInput.previous",
+		"when": "inQuickInput && quickInputType == 'quickPick'"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "quickInput.next",
+		"when": "inQuickInput && quickInputType == 'quickPick'"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "list.focusUp",
+		"when": "listFocus && !inputFocus && !treestickyScrollFocused"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "list.focusDown",
+		"when": "listFocus && !inputFocus && !treestickyScrollFocused"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "showPrevParameterHint",
+		"when": "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "showNextParameterHint",
+		"when": "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "goToNextReference",
+		"when": "inReferenceSearchEditor || referenceSearchVisible"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "goToPreviousReference",
+		"when": "inReferenceSearchEditor || referenceSearchVisible"
+	},
+	{
+		"key": "ctrl+shift+r",
+		"command": "workbench.action.terminal.runRecentCommand",
+		"when": "terminalFocus"
+	},
+	{
+		"key": "ctrl+r", // c-r和vscode history冲突
+		"command": "workbench.action.terminal.sendSequence",
+		"args": {
+			"text": "\u0012" /*^R*/
+		},
+		"when": "terminalFocus"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "workbench.action.terminal.selectNextSuggestion",
+		"when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "workbench.action.terminal.selectPrevSuggestion",
+		"when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
+	},
+	{
+		"key": "ctrl+j",
+		"command": "workbench.action.terminal.selectNextSuggestion",
+		"when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
+	},
+	{
+		"key": "ctrl+k",
+		"command": "workbench.action.terminal.selectPrevSuggestion",
+		"when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
+	},
+	{
+		"key": "ctrl+s",
+		"command": "searchEditorApplyChanges.apply",
+		"when": "inSearchEditor"
+	},
+	{
+		"key": "ctrl+shift+oem_comma",
+		"command": "-workbench.action.terminal.configureSuggestSettings",
+		"when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
+	},
+	{
+		"key": "ctrl+shift+oem_comma",
+		"command": "workbench.action.openSettingsJson"
+	},
+	{
+		"key": "ctrl+t",
+		"command": "-workbench.action.showAllSymbols"
+	},
+	{
+		"key": "ctrl+t",
+		"command": "-workbench.action.browser.newTab",
+		"when": "activeEditor == 'workbench.editor.browser'"
+	},
+	{
+		"key": "ctrl+t",
+		"command": "-extension.vim_ctrl+t",
+		"when": "editorTextFocus && vim.active && vim.use<C-t> && !inDebugRepl"
+	},
+	{
+		"key": "ctrl+t",
+		"command": "workbench.action.files.newUntitledFile"
+	},
+	{
+		"key": "alt+n",
+		"command": "multiDiffEditor.goToNextChange",
+		"when": "activeEditor == 'multiDiffEditor'"
+	},
+	{
+		"key": "alt+n",
+		"command": "workbench.action.compareEditor.nextChange",
+		"when": "textCompareEditorVisible"
+	},
+	{
+		"key": "alt+n",
+		"command": "workbench.action.editor.nextChange",
+		"when": "editorTextFocus && !textCompareEditorActive && quickDiffDecorationCount != '0'"
+	},
+	{
+		"key": "alt+p",
+		"command": "multiDiffEditor.goToPreviousChange",
+		"when": "activeEditor == 'multiDiffEditor'"
+	},
+	{
+		"key": "alt+p",
+		"command": "workbench.action.compareEditor.previousChange",
+		"when": "textCompareEditorVisible"
+	},
+	{
+		"key": "alt+p",
+		"command": "workbench.action.editor.previousChange",
+		"when": "editorTextFocus && !textCompareEditorActive && quickDiffDecorationCount != '0'"
+	},
+	{
+		"key": "ctrl+o",
+		"command": "-workbench.action.files.openFile",
+		"when": "true"
+	},
+	{
+		"key": "ctrl+o",
+		"command": "-workbench.action.files.openFolderViaWorkspace",
+		"when": "!openFolderWorkspaceSupport && workbenchState == 'workspace'"
+	},
+	{
+		"key": "ctrl+o",
+		"command": "-workbench.action.files.openFileFolder",
+		"when": "isMacNative && openFolderWorkspaceSupport"
+	},
+	{
+		"key": "ctrl+o",
+		"command": "-workbench.action.files.openLocalFile",
+		"when": "remoteFileDialogVisible"
+	},
+	{
+		"key": "ctrl+o",
+		"command": "-extension.vim_ctrl+o",
+		"when": "editorTextFocus && vim.active && vim.use<C-o> && !inDebugRepl"
+	}
+]
