@@ -1,66 +1,67 @@
 {
-	"terminal.integrated.shellIntegration.enabled": true, // 和starship init冲突
+	//=========================================================================
+	//  Workbench & Window
+	//=========================================================================
 	"security.workspace.trust.untrustedFiles": "open",
 	"update.mode": "none",
-	"gitlens.proxy": {},
-	"gitlens.home.preview.enabled": false,
-	"window.zoomLevel": -1,
 	"update.enableWindowsBackgroundUpdates": false,
-	"terminal.integrated.suggest.enabled": true,
-	"terminal.integrated.stickyScroll.enabled": true,
-	"terminal.integrated.fontLigatures.enabled": true,
-	"terminal.integrated.persistentSessionScrollback": 20000,
-	"diffEditor.ignoreTrimWhitespace": false,
+	"window.zoomLevel": -1,
+	"workbench.editor.limit.enabled": true,
+	"workbench.editor.limit.value": 10,
+	"workbench.secondarySideBar.defaultVisibility": "hidden",
+	"workbench.editorAssociations": {
+		"{hexdiff}:/**/*.*": "hexEditor.hexedit",
+		"*.bin": "hexEditor.hexedit",
+		"*.bin@": "hexEditor.hexedit",
+		"*.bin\u0001$": "hexEditor.hexedit",
+		"*.bin\u0001": "hexEditor.hexedit",
+		"*.bin\u0006$": "hexEditor.hexedit"
+	},
 	"files.associations": {
 		"*.ac": "cpp",
 		"*.toml": "toml"
 	},
-	"gitlens.plusFeatures.enabled": false,
+	"chat.viewSessions.orientation": "stacked",
+	"chat.disableAIFeatures": true,
 	"extensions.experimental.affinity": {
 		"vscodevim.vim": 1
 	},
-	// by szw
-	//-------------------------------
-	//		 Appearance   		  ---
-	//-------------------------------
+	//=========================================================================
+	//  Appearance & Theme
+	//=========================================================================
+	"workbench.colorTheme": "Cyber '77",
 	"workbench.colorCustomizations": {
 		// 1. 当前选中的匹配单词（调暗一点或者换个颜色）
 		"editor.findMatchBackground": "#1064feff",
 		// 2. 其他匹配单词（调亮一点，增加透明度）
 		"editor.findMatchHighlightBackground": "#80209fb5"
 	},
-	"workbench.colorTheme": "Cyber '77",
-	"editor.guides.bracketPairs": "active", // 括号范围横向和竖向提示线（vscode默认缩进有提示线）
-	// 拼写错误提示：三个点（默认波浪线）
-	"editor.formatOnSave": true, // 保存自动格式化
-	"cSpell.diagnosticLevel": "Hint",
-	"editor.stickyScroll.enabled": true, // 粘性滚动 多层级头悬浮
-	"editor.stickyScroll.maxLineCount": 8,
-	"editor.lineNumbers": "on", // 相对行号 relative
 	"editor.fontFamily": "Maple Mono NF CN",
 	"editor.fontWeight": "400", // 400 Regular 必须安装对应字重 Regular Bold
 	"editor.fontLigatures": true,
 	// "terminal.integrated.fontFamily": "RecMonoCasual Nerd Font Mono",
-	//-------------------------------
-	//			 Editor   		  ---
-	//-------------------------------
-	"[python]": {
-		"editor.defaultFormatter": "charliermarsh.ruff",
-		"editor.formatOnSave": false,
-		"editor.formatOnPaste": false
-	},
-	// dictionary Completion：支持编程语言内补全
-	"dictCompletion.programmingLanguage": true,
-	"[cpp]": {
-		// 支持.clang-format
-		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
-		"editor.quickSuggestions": {
-			"other": "on",
-			"comments": "on", // 只有comment支持 dictionary
-			"strings": "on"
-		}
-	},
-	"C_Cpp.clang_format_fallbackStyle": "Google",
+	//--------------------------------
+	//  Disable animation effects (by szw)
+	//--------------------------------
+	"editor.minimap.enabled": false,
+	"editor.cursorSmoothCaretAnimation": "off",
+	"editor.smoothScrolling": false,
+	"workbench.list.smoothScrolling": false,
+	"terminal.integrated.gpuAcceleration": "off",
+	//=========================================================================
+	//  Editor
+	//=========================================================================
+	"editor.formatOnSave": true, // 保存自动格式化
+	"editor.renderWhitespace": "none",
+	"editor.lineNumbers": "on", // 相对行号 relative
+	"editor.stickyScroll.enabled": true, // 粘性滚动 多层级头悬浮
+	"editor.stickyScroll.maxLineCount": 8,
+	"editor.guides.bracketPairs": "active", // 括号范围横向和竖向提示线（vscode默认缩进有提示线）
+	"editor.pasteAs.preferences": [],
+	"diffEditor.ignoreTrimWhitespace": false,
+	//--------------------------------
+	//  Semantic highlighting
+	//--------------------------------
 	"editor.semanticHighlighting.enabled": true,
 	"editor.semanticTokenColorCustomizations": {
 		"enabled": true,
@@ -143,14 +144,44 @@
 			}
 		}
 	},
-	//-------------------------------
-	//			 vim	   		  ---
-	//-------------------------------
+	//=========================================================================
+	//  Languages
+	//=========================================================================
+	"[python]": {
+		"editor.defaultFormatter": "charliermarsh.ruff",
+		"editor.formatOnSave": false,
+		"editor.formatOnPaste": false
+	},
+	"[cpp]": {
+		// 支持.clang-format
+		"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+		"editor.quickSuggestions": {
+			"other": "on",
+			"comments": "on", // 只有comment支持 dictionary
+			"strings": "on"
+		}
+	},
+	"C_Cpp.clang_format_fallbackStyle": "Google",
+	"C_Cpp.intelliSenseEngine": "disabled",
+	"dictCompletion.programmingLanguage": true, // dictionary Completion：支持编程语言内补全
+	//=========================================================================
+	//  Terminal
+	//=========================================================================
+	"terminal.integrated.shellIntegration.enabled": true, // 和starship init冲突
+	"terminal.integrated.suggest.enabled": true,
+	"terminal.integrated.stickyScroll.enabled": true,
+	"terminal.integrated.fontLigatures.enabled": true,
+	"terminal.integrated.persistentSessionScrollback": 20000,
+	"terminal.integrated.scrollback": 20000,
+	//=========================================================================
+	//  Vim
+	//=========================================================================
 	"vim.surround": true,
 	"vim.scroll": 15,
 	"vim.highlightedyank.enable": true, // yank高亮
 	// by zyy
-	"vim.sneak": true,
+	// "vim.sneak": true,
+	"vim.easymotion": true,
 	"vim.showMarksInGutter": true,
 	// "vim.smartRelativeLine": false, // 相对行号 true
 	"vim.useSystemClipboard": true,
@@ -158,13 +189,13 @@
 	"vim.substitutionTextColor": "#CBA6F7",
 	// "vim.enableNeovim": true,
 	//----------------------------------------------------------
-	//			 vim keyboard shortcuts 				 	 ---
+	//  vim: keys handled by VS Code instead of vim
 	//----------------------------------------------------------
 	// 禁用vim默认快捷键 恢复vscode快捷键功能
 	"vim.handleKeys": {
 		// 禁用之后 vscode vim 不能捕获快捷键 重新配置只能写在keybingdings.json
-		// vim默认注册ctrl-d ctrk-u等按键 when:vim.active 
-		// 比keybindings中editorTextFocus更具体 vim优先级更高 导致vscode自定义命令被拦截 
+		// vim默认注册ctrl-d ctrk-u等按键 when:vim.active
+		// 比keybindings中editorTextFocus更具体 vim优先级更高 导致vscode自定义命令被拦截
 		"<C-o>": false, // 使用vscode跳转替代（原：跳回上个位置 older）
 		"<C-i>": false, // 使用vscode跳转替代（原：跳回下个位置 newer）
 		"<C-z>": false,
@@ -173,32 +204,57 @@
 		"<C-w>": false, // 和关闭tab冲突
 		"<C-t>": false, // 和关闭tab冲突
 	},
+	//----------------------------------------------------------
+	//  vim: normal mode bindings
+	//----------------------------------------------------------
 	// 组合键：<S-x> 或 s-x: shift <C-x> 或 c-x: ctrl
 	"vim.normalModeKeyBindingsNonRecursive": [
-		// by szw 
+		// by szw
+		{
+			"before": [
+				"s"
+			],
+			"after": [
+				"<leader>",
+				"<leader>",
+				"2",
+				"s"
+			]
+		},
+		{ // 删除到末尾 存入黑洞寄存器
+			"before": [
+				"D"
+			],
+			"after": [
+				"d",
+				"i",
+				"w"
+			]
+		},
 		{ // 复制到行末尾不包含换行符
 			"before": [
 				"Y"
 			],
 			"after": [
-				"y",
-				"$"
+				"v",
+				"i",
+				"w",
+				"y"
 			]
 		},
-		{ // 移到行首
+		{ // 复制到行末尾不包含换行符
 			"before": [
-				"<C-a>",
+				"P"
 			],
 			"after": [
-				"^"
-			]
-		},
-		{
-			"before": [
-				"<C-e>",
-			],
-			"after": [
-				"$"
+				"v",
+				"i",
+				"w",
+				"\"",
+				"_",
+				"d",
+				"h",
+				"p"
 			]
 		},
 		{
@@ -218,6 +274,15 @@
 			],
 			"commands": [
 				"workbench.action.files.save",
+				"workbench.action.closeActiveEditor"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"q"
+			],
+			"commands": [
 				"workbench.action.closeActiveEditor"
 			]
 		},
@@ -253,16 +318,6 @@
 			],
 			"commands": [
 				"workbench.action.toggleSidebarVisibility"
-			]
-		},
-		{ // 删除到末尾 存入黑洞寄存器
-			"before": [
-				"D"
-			],
-			"after": [
-				"\"",
-				"_",
-				"D"
 			]
 		},
 		{ // 删除 存入黑洞删除
@@ -519,14 +574,14 @@
 			],
 			"silent": true
 		},
-		{
-			"before": [
-				"s"
-			],
-			"commands": [
-				"flash-vscode.start"
-			]
-		},
+		// {
+		// 	"before": [
+		// 		"s"
+		// 	],
+		// 	"commands": [
+		// 		"flash-vscode.start"
+		// 	]
+		// },
 		{
 			"before": [
 				"S"
@@ -544,6 +599,9 @@
 			]
 		},
 	],
+	//----------------------------------------------------------
+	//  vim: insert mode bindings
+	//----------------------------------------------------------
 	"vim.insertModeKeyBindingsNonRecursive": [
 		{
 			"before": [
@@ -573,6 +631,9 @@
 			"silent": true
 		}
 	],
+	//----------------------------------------------------------
+	//  vim: visual mode bindings
+	//----------------------------------------------------------
 	"vim.visualModeKeyBindingsNonRecursive": [
 		// by szw
 		{ // 选中
@@ -737,23 +798,28 @@
 			"silent": true
 		},
 	],
-	//-------------------------------
-	//		 	Tools   		  ---
-	//-------------------------------
-	"icodemate.complete.enabled": false,
-	"workbench.editor.limit.enabled": true,
-	"workbench.editor.limit.value": 10,
-	"terminal.integrated.scrollback": 20000,
-	"workbench.editorAssociations": {
-		"{hexdiff}:/**/*.*": "hexEditor.hexedit",
-		"*.bin": "hexEditor.hexedit",
-		"*.bin@": "hexEditor.hexedit",
-		"*.bin\u0001$": "hexEditor.hexedit",
-		"*.bin\u0001": "hexEditor.hexedit",
-		"*.bin\u0006$": "hexEditor.hexedit"
-	},
+	//=========================================================================
+	//  Extensions
+	//=========================================================================
+	//--------------------------------
+	//  Git / GitLens
+	//--------------------------------
+	"git.autofetch": true,
+	"gitlens.proxy": {},
+	"gitlens.home.preview.enabled": false,
+	"gitlens.plusFeatures.enabled": false,
 	"gitlens.views.commitDetails.files.layout": "list",
-
+	//--------------------------------
+	//  Code Spell Checker
+	//--------------------------------
+	"cSpell.diagnosticLevel": "Hint", // 拼写错误提示：三个点（默认波浪线）
+	// code spell checker 自定义字典
+	"cSpell.userWords": [
+		"LUTLASS"
+	],
+	//--------------------------------
+	//  Better TODO Tree
+	//--------------------------------
 	"better-todo-tree.highlights.customHighlight": {
 		"NOTE": {
 			"foreground": "black",
@@ -778,29 +844,51 @@
 			"gutterIcon": true,
 			"type": "text-and-comment"
 		},
+		"[copy]": {
+			"foreground": "black",
+			"background": "blue",
+			"iconColour": "purple",
+			"gutterIcon": false,
+			"type": "tag"
+		},
+		"[vpu]": {
+			"foreground": "black",
+			"background": "maroon",
+			"iconColour": "purple",
+			"gutterIcon": false,
+			"type": "tag"
+		},
+		"[me]": {
+			"foreground": "black",
+			"background": "maroon",
+			"iconColour": "purple",
+			"gutterIcon": false,
+			"type": "tag"
+		},
 	},
 	"better-todo-tree.general.tags": [
+		"NOTE",
+		"TODO",
+		"FIXME",
+		"[copy]",
+		"[vpu]",
+		"[me]",
 		"BUG",
 		"HACK",
-		"FIXME",
-		"TODO",
 		"XXX",
 		"[ ]",
 		"[x]",
-		"NOTE",
 	],
+	//--------------------------------
+	//  Hex Editor
+	//--------------------------------
 	"hexeditor.columnWidth": 16,
 	"hexeditor.showDecodedText": true,
 	"hexeditor.defaultEndianness": "little",
 	"hexeditor.inspectorType": "aside",
-	"workbench.secondarySideBar.defaultVisibility": "hidden",
-	"editor.pasteAs.preferences": [],
-	"C_Cpp.intelliSenseEngine": "disabled",
-	// code spell checker 自定义字典
-	"cSpell.userWords": [
-		"LUTLASS"
-	],
-	"chat.viewSessions.orientation": "stacked",
+	//--------------------------------
+	//  Misc
+	//--------------------------------
+	"icodemate.complete.enabled": false,
 	"markdown-preview-enhanced.previewTheme": "github-dark.css",
-	"chat.disableAIFeatures": true,
 }

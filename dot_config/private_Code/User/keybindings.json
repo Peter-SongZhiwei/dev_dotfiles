@@ -1,18 +1,8 @@
-// Place your key bindings in this file to override the defaultsauto[]
+// Place your key bindings in this file to override the defaults
 [
-	// ------------------------------------
-	//	 by szw 						---
-	// ------------------------------------
-	{ // 删除当前 terminal tab
-		"key": "ctrl+t",
-		"command": "workbench.action.terminal.new",
-		"when": "terminalFocus"
-	},
-	{ // 删除当前 terminal tab
-		"key": "ctrl+w",
-		"command": "workbench.action.terminal.kill",
-		"when": "terminalFocus"
-	},
+	//=========================================================================
+	//  Navigation
+	//=========================================================================
 	{ // 跳转上个位置
 		"key": "ctrl+o",
 		"command": "workbench.action.navigateBack"
@@ -29,6 +19,9 @@
 		"key": "alt+v",
 		"command": "toggleVim"
 	},
+	//=========================================================================
+	//  Editor
+	//=========================================================================
 	{
 		"key": "ctrl+shift+a", // 选择全部
 		"command": "editor.action.selectAll",
@@ -59,6 +52,9 @@
 	// 	"command": "-anySwap.forward",
 	// 	"when": "editorTextFocus && !editorReadonly"
 	// },
+	//--------------------------------
+	//  Find & Replace
+	//--------------------------------
 	{ // 搜索
 		"key": "ctrl+f",
 		"command": "actions.find",
@@ -74,64 +70,14 @@
 		"command": "editor.action.startFindReplaceAction",
 		"when": "editorFocus && editorIsOpen"
 	},
-	// ------------------------------------
-	//	 by zzy 						---
-	// ------------------------------------
 	{
-		"key": "shift+alt+c",
-		"command": "-copyFilePath",
-		"when": "!editorFocus"
+		"key": "ctrl+s",
+		"command": "searchEditorApplyChanges.apply",
+		"when": "inSearchEditor"
 	},
-	{
-		"key": "shift+alt+c",
-		"command": "-copyFilePath",
-		"when": "editorFocus"
-	},
-	{
-		"key": "ctrl+alt+c",
-		"command": "copyRelativeFilePath",
-		"when": "!editorFocus"
-	},
-	{
-		"key": "ctrl+k ctrl+shift+c",
-		"command": "-copyRelativeFilePath",
-		"when": "!editorFocus"
-	},
-	{
-		"key": "ctrl+alt+c",
-		"command": "copyRelativeFilePath",
-		"when": "editorFocus"
-	},
-	{
-		"key": "ctrl+k ctrl+shift+c",
-		"command": "-copyRelativeFilePath",
-		"when": "editorFocus"
-	},
-	{
-		"key": "ctrl+e",
-		"command": "-workbench.action.quickOpen"
-	},
-	{
-		"key": "ctrl+shift+w",
-		"command": "-workbench.action.closeWindow"
-	},
-	{
-		"key": "ctrl+shift+w",
-		"command": "workbench.action.closeOtherEditors"
-	},
-	{
-		"key": "ctrl+shift+alt+c",
-		"command": "git.checkout"
-	},
-	{
-		"key": "ctrl+oem_comma",
-		"command": "-workbench.action.openSettings"
-	},
-	{
-		"key": "ctrl+shift+oem_comma", // - 表示取消
-		"command": "-editor.action.inPlaceReplace.up",
-		"when": "editorTextFocus && !editorReadonly"
-	},
+	//--------------------------------
+	//  Go to definition (F12)
+	//--------------------------------
 	{
 		"key": "f12",
 		"command": "editor.action.revealDefinitionAside",
@@ -147,7 +93,114 @@
 		"command": "-editor.action.revealDefinition",
 		"when": "editorHasDefinitionProvider && editorTextFocus"
 	},
-	// by zzy
+	//=========================================================================
+	//  Files & Tabs
+	//=========================================================================
+	{
+		"key": "ctrl+e",
+		"command": "-workbench.action.quickOpen"
+	},
+	{
+		"key": "ctrl+shift+w",
+		"command": "-workbench.action.closeWindow"
+	},
+	{
+		"key": "ctrl+shift+w",
+		"command": "workbench.action.closeOtherEditors"
+	},
+	//--------------------------------
+	//  ctrl+t: new untitled file (remove conflicting defaults)
+	//--------------------------------
+	{
+		"key": "ctrl+t",
+		"command": "workbench.action.files.newUntitledFile"
+	},
+	{
+		"key": "ctrl+t",
+		"command": "-workbench.action.showAllSymbols"
+	},
+	{
+		"key": "ctrl+t",
+		"command": "-workbench.action.browser.newTab",
+		"when": "activeEditor == 'workbench.editor.browser'"
+	},
+	{
+		"key": "ctrl+t",
+		"command": "-extension.vim_ctrl+t",
+		"when": "editorTextFocus && vim.active && vim.use<C-t> && !inDebugRepl"
+	},
+	//--------------------------------
+	//  Copy file path
+	//--------------------------------
+	{
+		"key": "shift+alt+c",
+		"command": "-copyFilePath",
+		"when": "!editorFocus"
+	},
+	{
+		"key": "shift+alt+c",
+		"command": "-copyFilePath",
+		"when": "editorFocus"
+	},
+	{
+		"key": "ctrl+alt+c",
+		"command": "copyRelativeFilePath",
+		"when": "!editorFocus"
+	},
+	{
+		"key": "ctrl+k ctrl+shift+c",
+		"command": "-copyRelativeFilePath",
+		"when": "!editorFocus"
+	},
+	{
+		"key": "ctrl+alt+c",
+		"command": "copyRelativeFilePath",
+		"when": "editorFocus"
+	},
+	{
+		"key": "ctrl+k ctrl+shift+c",
+		"command": "-copyRelativeFilePath",
+		"when": "editorFocus"
+	},
+	//=========================================================================
+	//  Git
+	//=========================================================================
+	{
+		"key": "alt+c",
+		"command": "git.openChange"
+	},
+	{
+		"key": "ctrl+shift+alt+c",
+		"command": "git.checkout"
+	},
+	//=========================================================================
+	//  Settings
+	//=========================================================================
+	{
+		"key": "ctrl+shift+k",
+		"command": "workbench.action.openGlobalKeybindingsFile"
+	},
+	{
+		"key": "ctrl+oem_comma",
+		"command": "-workbench.action.openSettings"
+	},
+	{
+		"key": "ctrl+shift+oem_comma", // - 表示取消
+		"command": "-editor.action.inPlaceReplace.up",
+		"when": "editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+shift+oem_comma",
+		"command": "workbench.action.openSettingsJson"
+	},
+	{
+		"key": "ctrl+shift+oem_comma",
+		"command": "-workbench.action.terminal.configureSuggestSettings",
+		"when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
+	},
+	//=========================================================================
+	//  Explorer (vim-style file operations, by zzy)
+	//=========================================================================
 	{
 		"key": "shift+a",
 		"command": "explorer.newFolder",
@@ -183,6 +236,9 @@
 		"command": "renameFile",
 		"when": "!editorFocus && !inputFocus && filesExplorerFocus"
 	},
+	//=========================================================================
+	//  Panel navigation (ctrl+h/j/k/l)
+	//=========================================================================
 	{
 		"key": "ctrl+j",
 		"command": "workbench.action.navigateDown",
@@ -208,6 +264,9 @@
 		"command": "workbench.action.toggleSidebarVisibility",
 		"when": "vim.mode == 'Normal' && !editorFocus && !inputFocus"
 	},
+	//=========================================================================
+	//  ctrl+n / ctrl+p: move selection everywhere
+	//=========================================================================
 	{
 		"key": "ctrl+p",
 		"command": "editor.action.pageUpHover",
@@ -278,6 +337,19 @@
 		"command": "goToPreviousReference",
 		"when": "inReferenceSearchEditor || referenceSearchVisible"
 	},
+	//=========================================================================
+	//  Terminal
+	//=========================================================================
+	{ // 新建 terminal tab
+		"key": "ctrl+t",
+		"command": "workbench.action.terminal.new",
+		"when": "terminalFocus"
+	},
+	{ // 删除当前 terminal tab
+		"key": "ctrl+w",
+		"command": "workbench.action.terminal.kill",
+		"when": "terminalFocus"
+	},
 	{
 		"key": "ctrl+shift+r",
 		"command": "workbench.action.terminal.runRecentCommand",
@@ -311,38 +383,9 @@
 		"command": "workbench.action.terminal.selectPrevSuggestion",
 		"when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
 	},
-	{
-		"key": "ctrl+s",
-		"command": "searchEditorApplyChanges.apply",
-		"when": "inSearchEditor"
-	},
-	{
-		"key": "ctrl+shift+oem_comma",
-		"command": "-workbench.action.terminal.configureSuggestSettings",
-		"when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
-	},
-	{
-		"key": "ctrl+shift+oem_comma",
-		"command": "workbench.action.openSettingsJson"
-	},
-	{
-		"key": "ctrl+t",
-		"command": "-workbench.action.showAllSymbols"
-	},
-	{
-		"key": "ctrl+t",
-		"command": "-workbench.action.browser.newTab",
-		"when": "activeEditor == 'workbench.editor.browser'"
-	},
-	{
-		"key": "ctrl+t",
-		"command": "-extension.vim_ctrl+t",
-		"when": "editorTextFocus && vim.active && vim.use<C-t> && !inDebugRepl"
-	},
-	{
-		"key": "ctrl+t",
-		"command": "workbench.action.files.newUntitledFile"
-	},
+	//=========================================================================
+	//  Diff navigation (alt+n/p)
+	//=========================================================================
 	{
 		"key": "alt+n",
 		"command": "multiDiffEditor.goToNextChange",
@@ -373,6 +416,9 @@
 		"command": "workbench.action.editor.previousChange",
 		"when": "editorTextFocus && !textCompareEditorActive && quickDiffDecorationCount != '0'"
 	},
+	//=========================================================================
+	//  ctrl+o: remove conflicting defaults (used for navigateBack)
+	//=========================================================================
 	{
 		"key": "ctrl+o",
 		"command": "-workbench.action.files.openFile",
