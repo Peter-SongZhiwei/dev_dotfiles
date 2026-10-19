@@ -1,0 +1,11 @@
+# Performance: all animations disabled
+cursor-animation-length = 0.0
+cursor-trail-size = 0.0
+cursor-animate-in-insert-mode = false
+cursor-animate-command-line = false
+cursor-vfx-mode = ""
+scroll-animation-length = 0.0
+position-animation-length = 0.0
+floating-shadow = false
+# Render only on events instead of continuously
+idle = false
