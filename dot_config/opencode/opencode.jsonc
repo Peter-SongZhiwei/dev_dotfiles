@@ -1,0 +1,15 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "icenter-mcp": {
+      "type": "local",
+      "command": ["uvx", "icenter-mcp@latest"],
+      "enabled": true,
+      "environment": {
+        "UV_INDEX_URL": "https://artsz.zte.com.cn/artifactory/api/pypi/public-pypi-virtual/simple",
+        "UV_EXTRA_INDEX_URL": "https://artsz.zte.com.cn/artifactory/api/pypi/buildself-release-pypi/simple",
+      },
+      "timeout": 60000
+    }
+  }
+}
