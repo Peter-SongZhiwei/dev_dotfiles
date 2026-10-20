@@ -605,22 +605,54 @@
 	"vim.insertModeKeyBindingsNonRecursive": [
 		{
 			"before": [
-				"c-j"
+				"<C-h>"
 			],
-			"commands": [
-				"editor.action.triggerSuggest"
+			"after": [
+				"<Left>"
 			],
-			"silent": true
 		},
 		{
 			"before": [
-				"c-k"
+				"<C-j>"
 			],
-			"commands": [
-				"editor.action.triggerParameterHints"
+			"after": [
+				"<Down>"
 			],
-			"silent": true
 		},
+		{
+			"before": [
+				"<C-k>"
+			],
+			"after": [
+				"<Up>"
+			],
+		},
+		{
+			"before": [
+				"<C-l>"
+			],
+			"after": [
+				"<Right>"
+			],
+		},
+		// {
+		// 	"before": [
+		// 		"c-j"
+		// 	],
+		// 	"commands": [
+		// 		"editor.action.triggerSuggest"
+		// 	],
+		// 	"silent": true
+		// },
+		// {
+		// 	"before": [
+		// 		"c-k"
+		// 	],
+		// 	"commands": [
+		// 		"editor.action.triggerParameterHints"
+		// 	],
+		// 	"silent": true
+		// },
 		{
 			"before": [
 				"c-v"
@@ -635,7 +667,15 @@
 	//  vim: visual mode bindings
 	//----------------------------------------------------------
 	"vim.visualModeKeyBindingsNonRecursive": [
-		// by szw
+		{ // 移动到末尾最后一个非空格的字符
+			"before": [
+				"$"
+			],
+			"after": [
+				"g",
+				"_"
+			]
+		},
 		{ // 选中
 			"before": [
 				"<leader>",

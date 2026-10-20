@@ -240,11 +240,6 @@
 	//  Panel navigation (ctrl+h/j/k/l)
 	//=========================================================================
 	{
-		"key": "ctrl+j",
-		"command": "workbench.action.navigateDown",
-		"when": "vim.mode == 'Normal'"
-	},
-	{
 		"key": "ctrl+k",
 		"command": "workbench.action.navigateUp",
 		"when": "vim.mode == 'Normal'"
@@ -364,18 +359,8 @@
 		"when": "terminalFocus"
 	},
 	{
-		"key": "ctrl+n",
-		"command": "workbench.action.terminal.selectNextSuggestion",
-		"when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
-	},
-	{
 		"key": "ctrl+p",
 		"command": "workbench.action.terminal.selectPrevSuggestion",
-		"when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
-	},
-	{
-		"key": "ctrl+j",
-		"command": "workbench.action.terminal.selectNextSuggestion",
 		"when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
 	},
 	{
@@ -443,5 +428,14 @@
 		"key": "ctrl+o",
 		"command": "-extension.vim_ctrl+o",
 		"when": "editorTextFocus && vim.active && vim.use<C-o> && !inDebugRepl"
+	},
+	{
+		"key": "ctrl+j",
+		"command": "-markdown.editor.joinLines",
+		"when": "false"
+	},
+	{
+		"key": "ctrl+j",
+		"command": "-workbench.action.togglePanel"
 	}
 ]
