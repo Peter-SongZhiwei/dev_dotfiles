@@ -1,8 +1,18 @@
 # 敏感密钥（本地独立管理，永不入库）
 .bash_secrets
 .config/opencode/service.json
-# VSCode Server 运行时数据（非配置，频繁变动）
-.config/Code
+# VS Code 运行时数据（保留 User 配置入库）
+.config/Code/User/workspaceStorage
+.config/Code/User/globalStorage
+.config/Code/User/History
+.config/Code/User/logs
+.config/Code/CachedData
+.config/Code/CachedExtensions
+.config/Code/CachedExtensionVSIXs
+.config/Code/Cache
+.config/Code/Code Cache
+.config/Code/Crashpad
+.config/Code/logs
 
 # Chezmoi 自身状态（不同机器不同，勿入库）
 .config/chezmoi
