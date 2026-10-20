@@ -13,3 +13,18 @@
 .config/Code/Code Cache
 .config/Code/Crashpad
 .config/Code/logs
+
+# Chezmoi 自身状态（不同机器不同，勿入库）
+.config/chezmoi
+
+# 嵌套 git 仓库的内部数据
+.config/**/.git
+
+# 备份 / 归档文件
+.config/**/*.bak
+.config/**/*.tar
+
+# opencode 动态内容（命令/技能/运行时配置）
+.config/opencode/commands
+.config/opencode/skills
+.config/opencode/opencode.jsonc
