@@ -23,3 +23,8 @@
 # 备份 / 归档文件
 .config/**/*.bak
 .config/**/*.tar
+
+# opencode 动态内容（命令/技能/运行时配置）
+.config/opencode/commands
+.config/opencode/skills
+.config/opencode/opencode.jsonc
