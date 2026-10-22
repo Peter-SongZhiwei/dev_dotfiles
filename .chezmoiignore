@@ -1,7 +1,13 @@
+# 仓库自身的文档，不属于 dotfiles（避免 apply 时创建到 ~ 下）
+AGENTS.md
+LICENSE
+README.md
+
 # 敏感密钥（本地独立管理，永不入库）
 .bash_secrets
 .config/opencode/service.json
 # VS Code 运行时数据（保留 User 配置入库）
+.config/Code/agent-host
 .config/Code/User/workspaceStorage
 .config/Code/User/globalStorage
 .config/Code/User/History
@@ -20,9 +26,10 @@
 # 嵌套 git 仓库的内部数据
 .config/**/.git
 
-# 备份 / 归档文件
+# 备份 / 归档 / 日志文件
 .config/**/*.bak
 .config/**/*.tar
+.config/**/*.log
 
 # opencode 动态内容（命令/技能/运行时配置）
 .config/opencode/commands
