@@ -39,6 +39,9 @@ return {
             end
             map("n", "]c", next_change, "Next Change")
             map("n", "[c", prev_change, "Prev Change")
+            -- VS Code parity: [g ]g for prev/next change
+            map("n", "]g", next_change, "Next Change")
+            map("n", "[g", prev_change, "Prev Change")
             map("n", "do", obtain, "Obtain Diff")
             map("n", "dp", put, "Put Diff")
             map("n", "dO", gs.preview_hunk_inline, "Preview Hunk Inline")
