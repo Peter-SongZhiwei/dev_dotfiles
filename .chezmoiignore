@@ -23,6 +23,9 @@ README.md
 # Chezmoi 自身状态（不同机器不同，勿入库）
 .config/chezmoi
 
+# starship 主题/配置按机器自定义，不用 chezmoi 管理
+.config/starship.toml
+
 # 嵌套 git 仓库的内部数据
 .config/**/.git
 
