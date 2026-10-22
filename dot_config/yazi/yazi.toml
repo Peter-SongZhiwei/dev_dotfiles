@@ -1,3 +1,4 @@
+
 [opener]
 edit = [ # nvim打开
     { run = 'nvim "$@"', block = true, desc = "Edit"}
@@ -10,3 +11,5 @@ prepend_rules = [
 
 [mgr]
 linemode = "owner"
+ratio = [1, 2, 5] # layout
+

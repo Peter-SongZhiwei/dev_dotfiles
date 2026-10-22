@@ -2,6 +2,16 @@
 # ---------------
 #  functions
 # ---------------
+# yazi: quit and cd the current dir
+function y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    command yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd < "$tmp"
+    [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+    rm -f -- "$tmp"
+}
+
+# fuzzy vim
 fv() {
     local f
     f=$(fzf --preview 'bat --color=always --style=numbers {} 2>/dev/null || cat {}')
@@ -12,6 +22,7 @@ fv() {
     "${cmd[@]}"
 }
 
+# fuzzy cd
 fcd() {
   local sel
   sel=$(fd --hidden --exclude .git 2>/dev/null || find . -not -path '*/.git/*')
@@ -34,6 +45,7 @@ fcd() {
   ls -al
 }
 
+# list all $PATH
 show_path() {
     local var="${1:-PATH}"
     local val="${!var}"

@@ -67,9 +67,10 @@ export TORCH_DEVICE_BACKEND_AUTOLOAD=0 # 关闭 torch_lpu
 ld_libary_path_add "/usr/local/mpi/lib"
 path_add "/usr/local/mpi/bin"
 
+export ETHER_SDK_PATH=/home/zte/lpu_config/daily_e200a_cgsl_x86_gcc8_20261017000000
 # export ETHER_SDK_PATH=/home/zte/lpu_config/daily_e200a_cgsl_x86_gcc8_20260916000000
 #export ETHER_SDK_PATH=/home/zte/lpu_config/evas_e200_sdk_cgsl_x86_gcc8_0.2.3.41_bugfix
-export ETHER_SDK_PATH=/home/zte/lpu_config/epoch-evas_e200_sdk_cgsl_x86_gcc8_0.2.6.61_release
+# export ETHER_SDK_PATH=/home/zte/lpu_config/epoch-evas_e200_sdk_cgsl_x86_gcc8_0.2.6.61_release
 path_add "$ETHER_SDK_PATH/base_env/hgss/bin"
 export ESDK_PATH=$ETHER_SDK_PATH
 export ClANG_18=$ETHER_SDK_PATH/base_env/hgss/bin
@@ -80,8 +81,9 @@ export VISA_PATH=$ETHER_SDK_PATH/application/visa
 
 export https_proxy=http://127.0.0.1:1080
 export http_proxy=http://127.0.0.1:1080
-# opencode不走代理配置
-export no_proxy="mirrors.zte.com.cn,127.0.0,1,localhost,::1"
+# 不走代理配置 zte网站 
+export no_proxy="::1,10.*.*.*,10.0.0.0/8,10.192.45.187,10.234.68.5,10.30.6.48,10.3.76.100,10.40.13.107,10.40.66.240,10.41.13.247,10.54.12.47,10.54.20.104,10.54.20.51,10.54.20.61,10.54.20.73,10.54.20.99,10.57.163.170,10.88.138.100,10.88.138.8,10.88.40.91,10.88.98.10,127.0.0.0/8,127.0.0.1,*.ds.zte.com.cn,.ds.zte.com.cn,ds.zte.com.cn,gerrit.zte.com.cn,gitlab.zte.com.cn,localhost,maas-apigateway.dt.zte.com.cn,nsdlmirrors.zte.com.cn,*.sanechips.com.cn,.sanechips.com.cn,sanechips.com.cn,*.uac.zte.com.cn,*.xydigit.com,.xydigit.com,xydigit.com,*.zte.com.cn,.zte.com.cn,zte.com.cn,*zte.intra,zte.intra"
+export NO_PROXY="$no_proxy"
 
 # ========================================
 #  tools initiation && configuration 
