@@ -1,0 +1,7 @@
+// Vim-style page navigation.
+// Note: Ctrl-d is also gitui's default "commit" key inside the
+// commit/tag message popup; there the commit action takes precedence.
+(
+    page_up: Some(( code: Char('u'), modifiers: "CONTROL")),
+    page_down: Some(( code: Char('d'), modifiers: "CONTROL")),
+)
