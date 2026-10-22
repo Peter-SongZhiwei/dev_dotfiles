@@ -66,6 +66,12 @@ After modifying managed configuration:
 4. Check for unintended additions, deletions, and secrets.
 5. Report changed files and any potential risks.
 
+8. Remote (SSH) Machines
+
+* When connected over SSH (headless, no GUI), sync with `chezmoi apply` and adopt local tweaks with `chezmoi add` as usual.
+* Do NOT manage VS Code `settings.json` or `keybindings.json` on SSH/headless machines — they are desktop (GUI) configs and do not apply there.
+* Keep SSH-side changes minimal and terminal-focused (shell, tmux, nvim, git).
+
 General Principle
 
 When uncertain whether a file should be managed, leave it unmanaged and report the uncertainty rather than adding it automatically.
