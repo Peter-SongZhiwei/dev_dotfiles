@@ -166,6 +166,8 @@ alias vi="nvim --clean"
 alias vssh="vim ~/.ssh/config"
 alias vb='vim ~/.bashrc'
 alias vba='vim ~/.bash_aliases'
+alias vbs='vim ~/.bash_secrets'
+alias vbl='vim ~/.bashrc.local'
 alias vin='vim ~/.inputrc'
 alias vsudo='sudo EDITOR=vim visudo'
 alias sb='source ~/.bashrc'
