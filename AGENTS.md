@@ -38,6 +38,7 @@ Management Scope
 * Do not overwrite or delete local changes without reviewing their purpose.
 * Avoid adding unrelated files during synchronization.
 * Do not automatically commit or push changes unless explicitly requested.
+* If `git merge`/`git pull` reports a conflict, stop and notify the user; review the conflict and show a suggested resolution. Never auto-resolve conflicts.
 
 4. Portability
 

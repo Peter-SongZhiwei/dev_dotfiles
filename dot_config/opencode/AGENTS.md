@@ -28,6 +28,7 @@ Management scope:
    - Preserve existing templates, conditional config, and file attributes; do not replace templates with rendered machine-specific values.
    - Do not overwrite/delete local changes without reviewing their purpose. Avoid adding unrelated files.
    - Do not automatically commit or push unless explicitly requested.
+   - On merge/pull conflict, stop and notify the user; review the conflict and suggest a resolution. Never auto-resolve.
 4. Portability
    - Prefer config that works across machines; avoid hardcoded home dirs, usernames, absolute paths, device-specific settings.
    - Use chezmoi templates only for meaningful OS/host differences.
