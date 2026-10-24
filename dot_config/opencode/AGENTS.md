@@ -10,6 +10,11 @@
 
 Goal: maintain a clean, portable, minimal, and reproducible dotfiles repository using chezmoi. Prefer correctness and maintainability over tracking every configuration file.
 
+Management scope:
+- Manage user-maintained configuration files under `~/.config`, subject to the selection, ignore, and safety rules below.
+- Manage user-maintained Bash configuration files matching `~/.bash*` (for example, `.bashrc` and `.bash_aliases`), excluding history, secrets, and runtime state.
+- On local desktop (non-SSH/headless) machines only, manage VS Code `~/.config/Code/User/settings.json` and `~/.config/Code/User/keybindings.json`.
+
 1. File selection
    - Manage only user-maintained configuration files useful for reproducing the dev environment.
    - Ignore empty dirs/files (unless required), temporary files, caches, logs, backups, swap files, generated artifacts, runtime/session state, lock files, and machine-specific data.

@@ -6,6 +6,12 @@ Maintain a clean, portable, minimal, and reproducible dotfiles repository using 
 
 Prefer correctness and maintainability over tracking every configuration file.
 
+Management Scope
+
+* Manage user-maintained configuration files under `~/.config`, subject to the selection, ignore, and safety rules below.
+* Manage user-maintained Bash configuration files matching `~/.bash*` (for example, `.bashrc` and `.bash_aliases`), excluding history, secrets, and runtime state.
+* On local desktop (non-SSH/headless) machines only, manage VS Code `~/.config/Code/User/settings.json` and `~/.config/Code/User/keybindings.json`.
+
 1. File Selection
 
 * Manage only user-maintained configuration files that are useful for reproducing the development environment.
