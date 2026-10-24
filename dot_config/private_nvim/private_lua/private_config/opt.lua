@@ -41,7 +41,7 @@ opt.showcmdloc = "statusline"
 opt.cmdheight = 0
 
 -- scroll config
-opt.smoothscroll = true
+opt.smoothscroll = false
 
 -- confirm to save changes when leave
 opt.confirm = true
