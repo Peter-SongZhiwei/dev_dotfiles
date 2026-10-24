@@ -136,7 +136,7 @@ alias vsudo='sudo EDITOR=vim visudo'
 # ---------------
 #  tools
 # ---------------
-alias ls="eza --icons"
+alias ls="eza --icons=auto"
 alias ll="eza -l --icons"
 alias l=ll
 alias la="ll -a"
