@@ -1,0 +1,10 @@
+# .bash_profile
+
+# Get the aliases and functions
+# .bash_profile登陆自动执行 bashrc必须在bash_profile中显式调用
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+. "$HOME/.cargo/env"

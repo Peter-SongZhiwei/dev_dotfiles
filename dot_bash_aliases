@@ -2,6 +2,14 @@
 # ---------------
 #  functions
 # ---------------
+# print and execute
+run() {
+    printf '+'
+    printf ' %q' "$@"
+    printf '\n'
+    "$@"
+}
+
 # yazi: quit and cd the current dir
 function y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -128,10 +136,11 @@ alias vssh="vim ~/.ssh/config"
 alias vb='vim ~/.bashrc'
 alias vba='vim ~/.bash_aliases'
 alias vin='vim ~/.inputrc'
+alias vsudo='sudo EDITOR=vim visudo'
 alias sb='source ~/.bashrc'
 alias sba='source ~/.bash_aliases'
-alias rl='exec $SHELL -l' # 重新登陆 用新的SHELL进程替换当前SHELL
-alias vsudo='sudo EDITOR=vim visudo'
+alias stmux='run tmux source-file ~/.config/tmux/tmux.conf'
+alias rl='run exec $SHELL -l' # 重新登陆 用新的SHELL进程替换当前SHELL
 
 # ---------------
 #  tools
@@ -146,16 +155,16 @@ alias cd=z
 # ---------------
 #  git
 # ---------------
-alias cdws='cd "$(git rev-parse --show-toplevel 2>/dev/null)" || echo "不在 Git 仓库中"'
-alias gl='git log --oneline --graph'
-alias gs='git status'
-alias grs='git reset --soft HEAD^'
-alias grh='git reset --hard HEAD^'
-alias gr='git reset'
-alias gc='git reset --hard HEAD'
-alias gspr='git stash && git pull --rebase'
-alias gsp='git stash pop'
-alias gclean='git reset --hard HEAD && git clean -fd :/'
-alias gupdate='git reset --hard HEAD && git clean -fd :/ && git pull'
+alias cdws='run cd "$(git rev-parse --show-toplevel 2>/dev/null)" || echo "不在 Git 仓库中"'
+alias gl='run git log --oneline --graph'
+alias gs='run git status'
+alias grs='run git reset --soft HEAD^'
+alias grh='run git reset --hard HEAD^'
+alias gr='run git reset'
+alias gc='run git reset --hard HEAD'
+alias gspr='run git stash && git pull --rebase'
+alias gsp='run git stash pop'
+alias gclean='run git reset --hard HEAD && git clean -fd :/'
+alias gupdate='run git reset --hard HEAD && git clean -fd :/ && git pull'
 
 
