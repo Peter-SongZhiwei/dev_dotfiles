@@ -2,6 +2,37 @@
 # ---------------
 #  functions
 # ---------------
+# rm archvied files
+rm_archives() {
+    local -a files=()
+    local file reply
+
+    while IFS= read -r -d '' file; do
+        files+=("$file")
+    done < <(
+        find . -maxdepth 1 -type f \
+            -regextype posix-extended \
+            -iregex '.*\.(tar|zip|gz|gzip|tgz|bz2|tbz|tbz2|xz|txz|zst|tzst|7z|rar|lz|lz4|lzma|lzo|Z|cab|arj)' \
+            -print0
+    )
+
+    if ((${#files[@]} == 0)); then
+        printf '当前目录没有匹配的压缩文件。\n'
+        return 0
+    fi
+
+    printf '将删除以下 %d 个文件：\n' "${#files[@]}"
+    printf '  %q\n' "${files[@]}"
+
+    read -r -p '按 Enter 确认删除，输入其他内容取消：' reply || return 1
+
+    if [[ -z "$reply" ]]; then
+        rm -v -- "${files[@]}"
+    else
+        printf '已取消。\n'
+    fi
+}
+
 # print and execute
 run() {
     printf '+'
