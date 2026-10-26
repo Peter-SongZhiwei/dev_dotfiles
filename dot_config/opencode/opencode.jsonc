@@ -9,7 +9,7 @@
       "settings": {
         // 注意：baseURL 填到 /v1 即可，包会自动拼接 /chat/completions
         "baseURL": "https://nebulacoder-maas.zte.com.cn/v1",
-        "apiKey": "{file:~/.maas_key}"
+        "apiKey": "{env:ZTE_MAAS_API_KEY}"
       },
       "headers": {
         "x-uac-app-id": "643672320122",
