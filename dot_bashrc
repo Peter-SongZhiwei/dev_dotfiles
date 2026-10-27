@@ -93,8 +93,14 @@ fi
 # ========================================
 #  tools initiation && configuration 
 # ========================================
-FZF_CRTL_T_COMMAND=
-eval "$(fzf --bash)"
+# fzf：只启用 Ctrl-R 历史搜索 + Alt-C 目录跳转（不启用 Ctrl-T 文件搜索）
+# 注意：不要用 bind 把 Ctrl-T 改绑成普通 readline 函数。fzf 用 `bind -x` 绑定 Ctrl-T，
+# 而 bash 5.1 在把 bind -x 的键改绑为普通函数时会清空整个 unix-command 键表，
+# 导致 Ctrl-R 报错：bash_execute_unix_command: cannot find keymap for command
+# 正确做法：把 FZF_CTRL_T_COMMAND 设为空串，fzf 就不会绑定 Ctrl-T，
+# bash 默认的 transpose-chars 保持可用。
+FZF_CTRL_T_COMMAND=
+eval "$(fzf --bash)" # 已同时包含 key-bindings.bash 和 completion.bash
 export FZF_DEFAULT_OPTS='--height 40% --layout=default --info=inline'
 
 # starship只初始化一次
@@ -105,15 +111,6 @@ fi
 eval "$(zoxide init bash)" # zoxide放到最后
 
 source ~/.bash_aliases
-# 加载 fzf 的 key bindings 和补全
-source ~/.config/fzf/key-bindings.bash
-source ~/.config/fzf/completion.bash
-
-# 禁用 fzf Ctrl-T 文件搜索（保留 Ctrl-R 历史搜索、Alt-C 目录跳转）
-# 将 Ctrl-T 恢复为 bash 默认的 transpose-chars，并清除 vi 各模式下的 fzf 绑定
-bind -m emacs-standard '"\C-t": transpose-chars'
-bind -m vi-insert -r "\C-t" 2>/dev/null
-bind -m vi-command -r "\C-t" 2>/dev/null
 
 # opencode tui 解压到/tmp再dlopen /tmp为noexec
 export TMPDIR=~/.cache/tmp
