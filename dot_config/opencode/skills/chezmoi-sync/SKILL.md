@@ -45,11 +45,13 @@ For each host the user names (e.g. `ssh 187vm`):
    ssh -o BatchMode=yes -o ConnectTimeout=8 <host> 'echo ok'
    ```
    If this fails, tell the user immediately and let them fix login. Do not try passwords.
-2. After connecting, confirm the remote machine's network connectivity (e.g. whether it can reach GitHub/origin, and whether a proxy is required):
+2. After connecting, check the remote machine's network connectivity — first external connectivity (e.g. google.com), then GitHub:
    ```bash
-   ssh <host> 'curl -sI --max-time 10 https://github.com -o /dev/null -w "%{http_code}\n"'
+   ssh <host> 'curl -sI --max-time 10 https://www.google.com -o /dev/null -w "google=%{http_code}\n"; curl -sI --max-time 10 https://github.com -o /dev/null -w "github=%{http_code}\n"'
    ```
-   If there are SSH or network connection problems, report them to the user first, then execute subsequent operations.
+   - If no push is needed, it is enough that the remote can pull (fetch) from origin.
+   - When a proxy is needed, use port 1080: set `export PROXY_PORT=1080` in `~/.bashrc.local` (machine-specific, not managed by chezmoi) and git `http.proxy`/`https.proxy` to `http://127.0.0.1:1080`.
+   - If there are SSH or network connection problems, report them to the user first, then execute subsequent operations.
 3. Inspect the remote state before changing anything:
    ```bash
    ssh <host> 'cd ~/.local/share/chezmoi && git fetch origin && git status -sb && git log HEAD..origin/main --oneline'
