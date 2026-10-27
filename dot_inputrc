@@ -23,3 +23,6 @@ set completion-ignore-case on
 # TAB: menu-complete
 # # 可选：反向遍历（Shift+Tab）
 # "\e[Z": menu-complete-backward
+
+# 关闭 readline 提示音（空行按退格、Tab 补全失败等）；程序输出的 \a 不受影响
+set bell-style none
