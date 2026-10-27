@@ -52,6 +52,77 @@ ss() {
 # ---------------
 #  functions
 # ---------------
+
+versions() {
+    local tool output version rc status
+    local -a cmd
+
+    if (( $# == 0 )); then
+        # 顺序即优先级，三档排列：
+        # 1) 语言 / 语言工具链 (languages & tooling)
+        # 2) 开发基础工具 (dev basics)
+        # 3) 其他 (others)
+        set -- \
+            python3 node npm rustc cargo gcc clang ruff ty \
+            bash git cmake tmux nvim rg fd fzf curl \
+            uv opencode chezmoi
+    fi
+    printf '%-16s %-12s %s\n' 'TOOL' 'STATUS' 'VERSION'
+    printf '%-16s %-12s %s\n' '----------------' '------------' '-------'
+
+    for tool in "$@"; do
+        # 为不同工具配置查询参数
+        case "$tool" in
+            # go)   cmd=(go version) ;;
+            # java) cmd=(java -version) ;;
+            tmux) cmd=(tmux -V) ;;
+            git|gcc|g++|clang|clang++|cmake|python|python3|bash|\
+            node|npm|rustc|cargo|nvim|rg|fd|fzf|curl|\
+            uv|ruff|ty|opencode|chezmoi)
+                cmd=("$tool" --version) ;;
+            *)
+                printf '%-16s %-12s %s\n' \
+                    "$tool" 'UNKNOWN' '请添加查询规则'
+                continue ;;
+        esac
+
+        if ! command -v "${cmd[0]}" >/dev/null 2>&1; then
+            printf '%-16s %-12s %s\n' "$tool" 'NOT_FOUND' '-'
+            continue
+        fi
+
+        # 合并 stdout/stderr，并保留命令退出码
+        if output=$("${cmd[@]}" </dev/null 2>&1); then
+            rc=0
+        else
+            rc=$?
+        fi
+
+        # 去掉颜色、回车和首尾空白，取第一行非空内容
+        version=$(
+            printf '%s\n' "$output" |
+                sed $'s/\033\\[[0-9;]*m//g; s/\r//g' |
+                awk '{
+                    sub(/^[[:space:]]+/, "")
+                    sub(/[[:space:]]+$/, "")
+                    if (length($0)) { print; exit }
+                }'
+        )
+
+        if (( rc != 0 )); then
+            status="ERROR($rc)"
+        elif [[ -z "$version" ]]; then
+            status='EMPTY'
+        else
+            status='OK'
+        fi
+
+        printf '%-16s %-12s %s\n' \
+            "$tool" "$status" "${version:--}"
+    done
+}
+
+
 # rm archvied files
 rm_archives() {
     local -a files=()
@@ -183,6 +254,7 @@ alias l=ll
 alias la="ll -a"
 alias cat=bat
 alias cd=z
+alias osr="run opencode service restart"
 
 # ---------------
 #  git
