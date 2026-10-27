@@ -1,0 +1,31 @@
+{
+  "name": "opencode-language-tutor",
+  "version": "0.1.0",
+  "description": "Writing feedback for OpenCode V2: review prompts in the language you are learning",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "exports": {
+    "./tui": "./src/tui.tsx"
+  },
+  "scripts": {
+    "typecheck": "bun x --bun tsc --noEmit",
+    "test": "bun test",
+    "build": "bun build ./src/tui.tsx --external @opencode/plugin/tui --external solid-js --external @opentui/core --external @opentui/solid --outdir dist"
+  },
+  "dependencies": {
+    "@opencode/plugin": "2.1.4"
+  },
+  "peerDependencies": {
+    "@opentui/core": ">=0.6.8",
+    "@opentui/solid": ">=0.6.8",
+    "solid-js": ">=1.9.0"
+  },
+  "devDependencies": {
+    "@opentui/core": "0.6.8",
+    "@opentui/solid": "0.6.8",
+    "@types/bun": "1.4.4",
+    "solid-js": "1.9.17",
+    "typescript": "7.0.2"
+  }
+}
