@@ -40,6 +40,7 @@ Management scope:
    - Review impact before `chezmoi apply`; do not run unfamiliar scripts; never delete unmanaged local files merely because absent from the repo.
 7. Verification — after modifying managed config: check the repo diff, validate source state, preview `chezmoi apply`, check for unintended additions/deletions/secrets, and report changed files and risks.
 8. Remote (SSH) machines
+   - When syncing to remote machines, first confirm that remote SSH login works (passwordless). After connecting, confirm the remote machine's network connectivity (e.g. whether it can reach GitHub/origin, and whether a proxy is required). If there are SSH or network connection problems, report them to the user first, then execute subsequent operations.
    - Over SSH (headless, no GUI), sync with `chezmoi apply` and adopt local tweaks with `chezmoi add` as usual.
    - Do NOT manage VS Code `settings.json` or `keybindings.json` on SSH/headless machines — they are desktop (GUI) configs.
    - Keep SSH-side changes minimal and terminal-focused (shell, tmux, nvim, git).

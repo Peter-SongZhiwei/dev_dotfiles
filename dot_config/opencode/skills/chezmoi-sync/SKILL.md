@@ -45,17 +45,22 @@ For each host the user names (e.g. `ssh 187vm`):
    ssh -o BatchMode=yes -o ConnectTimeout=8 <host> 'echo ok'
    ```
    If this fails, tell the user immediately and let them fix login. Do not try passwords.
-2. Inspect the remote state before changing anything:
+2. After connecting, confirm the remote machine's network connectivity (e.g. whether it can reach GitHub/origin, and whether a proxy is required):
+   ```bash
+   ssh <host> 'curl -sI --max-time 10 https://github.com -o /dev/null -w "%{http_code}\n"'
+   ```
+   If there are SSH or network connection problems, report them to the user first, then execute subsequent operations.
+3. Inspect the remote state before changing anything:
    ```bash
    ssh <host> 'cd ~/.local/share/chezmoi && git fetch origin && git status -sb && git log HEAD..origin/main --oneline'
    ```
-3. If the remote tree is dirty or has local commits, report that merging may conflict before proceeding.
-4. Merge and apply on the remote:
+4. If the remote tree is dirty or has local commits, report that merging may conflict before proceeding.
+5. Merge and apply on the remote:
    ```bash
    ssh <host> 'cd ~/.local/share/chezmoi && git merge origin/main && chezmoi apply'
    ```
    If merge conflicts occur, STOP and report the host and conflicted files.
-5. Verify on the remote: `ssh <host> 'cd ~/.local/share/chezmoi && chezmoi status --include=files'`.
+6. Verify on the remote: `ssh <host> 'cd ~/.local/share/chezmoi && chezmoi status --include=files'`.
 
 ## Conflict notification format
 

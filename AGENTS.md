@@ -75,6 +75,7 @@ After modifying managed configuration:
 
 8. Remote (SSH) Machines
 
+* When syncing to remote machines, first confirm that remote SSH login works (passwordless). After connecting, confirm the remote machine's network connectivity (e.g. whether it can reach GitHub/origin, and whether a proxy is required). If there are SSH or network connection problems, report them to the user first, then execute subsequent operations.
 * When connected over SSH (headless, no GUI), sync with `chezmoi apply` and adopt local tweaks with `chezmoi add` as usual.
 * Do NOT manage VS Code `settings.json` or `keybindings.json` on SSH/headless machines — they are desktop (GUI) configs and do not apply there.
 * Keep SSH-side changes minimal and terminal-focused (shell, tmux, nvim, git).
