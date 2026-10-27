@@ -1,4 +1,54 @@
 
+# switch sdk
+ss() {
+    local -A sdks=(
+        ["[e200软仿40] stable"]="/home/zte/lpu_config/evas_e200_sdk_cgsl_x86_gcc8_0.2.3.41_bugfix"
+        ["[e200实卡] stable"]="/home/zte/lpu_config/epoch-evas_e200_sdk_cgsl_x86_gcc8_0.2.3.44_release_bugfix_0416"
+        ["[e200a软仿] latest"]="/home/zte/lpu_config/daily_e200a_cgsl_x86_gcc8_20261027000000"
+    )
+
+    local selected
+    selected=$(
+        for key in "${!sdks[@]}"; do
+            printf "%s\t%s\n" "$key" "${sdks[$key]}"
+        done | sort | fzf \
+            --prompt="SDK > " \
+            --height=40% \
+            --layout=reverse \
+            --border \
+            --header="当前: ${ETHER_SDK_PATH:-未设置}" \
+            --preview='echo {2}' \
+            --preview-window=down:1
+    )
+
+    [[ -z "$selected" ]] && { echo "已取消"; return 0; }
+    # 提取别名（第一列）
+    local alias_key
+    alias_key=$(echo "$selected" | cut -f1)
+    local sdk_path="${sdks[$alias_key]}"
+
+    echo $sdk_path
+    if [[ ! -d "$sdk_path" ]]; then
+        echo "错误: 路径不存在: $sdk_path"
+        return 1
+    fi
+
+    export ETHER_SDK_PATH="$sdk_path"
+    export ESDK_PATH="$ETHER_SDK_PATH"
+    export ClANG_18="$ETHER_SDK_PATH/base_env/hgss/bin"
+    export RISCV_HGSS="$ETHER_SDK_PATH/base_env/hgss"
+    export VISA_PATH="$ETHER_SDK_PATH/application/visa"
+
+    # PATH / LD_LIBRARY_PATH 去重追加（避免反复 source 时无限膨胀）
+    local hgss_bin="$ETHER_SDK_PATH/base_env/hgss/bin"
+    local hgss_lib="$ETHER_SDK_PATH/base_env/hgss/lib/"
+    [[ ":$PATH:" != *":$hgss_bin:"* ]]             && export PATH="$hgss_bin:$PATH"
+    [[ ":$LD_LIBRARY_PATH:" != *":$hgss_lib:"* ]]  && export LD_LIBRARY_PATH="$hgss_lib:/usr/local/python3.10/lib:$LD_LIBRARY_PATH"
+
+    echo "✓ 已切换到: $alias_key"
+    echo "  $ETHER_SDK_PATH"
+}
+
 # ---------------
 #  functions
 # ---------------
@@ -42,6 +92,7 @@ run() {
 }
 
 # yazi: quit and cd the current dir
+# notice: function can't be named "yazi". when it calls yazi -> dead loop
 function y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
     command yazi "$@" --cwd-file="$tmp"
@@ -102,58 +153,6 @@ show_path() {
             printf '\033[90m%3d  %s  (不存在)\033[0m\n' "$i" "$p"
         fi
     done <<< "${val//:/$'\n'}"
-}
-
-
-
-# switch sdk
-ss() {
-    local -A sdks=(
-        ["[e200软仿40] stable"]="/home/zte/lpu_config/evas_e200_sdk_cgsl_x86_gcc8_0.2.3.41_bugfix"
-        ["[e200实卡] stable"]="/home/zte/lpu_config/epoch-evas_e200_sdk_cgsl_x86_gcc8_0.2.3.44_release_bugfix_0416"
-        ["[e200a软仿] 0728"]="/home/zte/lpu_config/daily_e200a_cgsl_x86_gcc8_20260728000000"
-        ["[e200a软仿] latest"]="/home/zte/lpu_config/daily_e200a_cgsl_x86_gcc8_20260916000000"
-    )
-
-    local selected
-    selected=$(
-        for key in "${!sdks[@]}"; do
-            printf "%s\t%s\n" "$key" "${sdks[$key]}"
-        done | sort | fzf \
-            --prompt="SDK > " \
-            --height=40% \
-            --layout=reverse \
-            --border \
-            --header="当前: ${ETHER_SDK_PATH:-未设置}" \
-            --preview='echo {2}' \
-            --preview-window=down:1
-    )
-    [[ -z "$selected" ]] && { echo "已取消"; return 0; }
-    # 提取别名（第一列）
-    local alias_key
-    alias_key=$(echo "$selected" | cut -f1)
-    local sdk_path="${sdks[$alias_key]}"
-
-    echo $sdk_path
-    if [[ ! -d "$sdk_path" ]]; then
-        echo "错误: 路径不存在: $sdk_path"
-        return 1
-    fi
-
-    export ETHER_SDK_PATH="$sdk_path"
-    export ESDK_PATH="$ETHER_SDK_PATH"
-    export ClANG_18="$ETHER_SDK_PATH/base_env/hgss/bin"
-    export RISCV_HGSS="$ETHER_SDK_PATH/base_env/hgss"
-    export VISA_PATH="$ETHER_SDK_PATH/application/visa"
-
-    # PATH / LD_LIBRARY_PATH 去重追加（避免反复 source 时无限膨胀）
-    local hgss_bin="$ETHER_SDK_PATH/base_env/hgss/bin"
-    local hgss_lib="$ETHER_SDK_PATH/base_env/hgss/lib/"
-    [[ ":$PATH:" != *":$hgss_bin:"* ]]             && export PATH="$hgss_bin:$PATH"
-    [[ ":$LD_LIBRARY_PATH:" != *":$hgss_lib:"* ]]  && export LD_LIBRARY_PATH="$hgss_lib:/usr/local/python3.10/lib:$LD_LIBRARY_PATH"
-
-    echo "✓ 已切换到: $alias_key"
-    echo "  $ETHER_SDK_PATH"
 }
 
 
