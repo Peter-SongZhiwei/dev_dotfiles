@@ -1,0 +1,33 @@
+{
+  "theme": "catppuccin",
+  "defaultTools": ["+grep", "+find", "+ls", "+tool_search", "+codemode"],
+  "packages": [
+    // Web search and URL fetching.
+    "npm:pi-web-access",
+    // Delegate tasks to focused subagents and run multi-agent workflows.
+    "npm:pi-subagents",
+    // Automatic file, cursor, and selection context from connected editors via /ide.
+    "npm:pi-ide-context",
+    // Native Starship-style footer, configured through /starship.
+    "npm:@narumitw/pi-starship",
+    // Language learning with writing feedback and bilingual translations.
+    "npm:pi-language-tutor",
+    // Deterministic permission gates: deny secrets, destructive bash, unsafe paths.
+    "npm:@gotgenes/pi-permission-system",
+    // Provider usage, limits, balances, and Codex Fast mode.
+    "npm:@narumitw/pi-usage",
+    // Tokens-per-second meter, shown by pi-starship's extension status.
+    "npm:pi-token-speed",
+    // Transparent tool and user-message frames.
+    "npm:pi-tidy",
+    // Show nested file diffs; load before Compact so its renderer wraps the summary.
+    "npm:pi-codemode-diff",
+    // Compact, expandable summaries for codemode calls.
+    "npm:pi-codemode-compact"
+  ],
+  "tidy": {
+    "frameUserMessages": true,
+    "groupTools": false,
+    "userMessageStyle": "rail"
+  }
+}

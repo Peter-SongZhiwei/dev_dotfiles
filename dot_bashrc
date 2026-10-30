@@ -7,7 +7,7 @@ case $- in
 *) return ;;
 esac
 
-echo '.bashrc ran'
+echo 'load .bashrc'
 
 # 头上添加
 path_add() {

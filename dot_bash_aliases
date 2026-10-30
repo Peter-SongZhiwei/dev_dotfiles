@@ -52,6 +52,9 @@ ss() {
 # ---------------
 #  functions
 # ---------------
+dl() {
+   scp "$1" ~/tmp
+}
 
 versions() {
     local tool output version rc status

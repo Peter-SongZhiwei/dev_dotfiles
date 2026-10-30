@@ -1,0 +1,31 @@
+{
+  "theme": "catppuccin",
+  "defaultTools": [
+    "+grep",
+    "+find",
+    "+ls",
+    "+tool_search",
+    "+codemode"
+  ],
+  "packages": [
+    "npm:pi-web-access",
+    "npm:pi-subagents",
+    "npm:pi-ide-context",
+    "npm:@narumitw/pi-starship",
+    "npm:pi-language-tutor",
+    "npm:@gotgenes/pi-permission-system",
+    "npm:@narumitw/pi-usage",
+    "npm:pi-token-speed",
+    "npm:pi-tidy",
+    "npm:pi-codemode-diff",
+    "npm:pi-codemode-compact"
+  ],
+  "tidy": {
+    "frameUserMessages": true,
+    "groupTools": false,
+    "userMessageStyle": "rail"
+  },
+  "lastChangelogVersion": "1.4.0",
+  "defaultProvider": "kimi-coding",
+  "defaultModel": "kimi-for-coding"
+}
