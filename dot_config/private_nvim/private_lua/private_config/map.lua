@@ -23,6 +23,7 @@ map('n', 'K', ':m .-2<CR>==', { desc = '交换行与上一行' })
 map('n', '<A-j>', ':m .+1<CR>==', { desc = '交换行与下一行' })
 map('n', 'J', ':m .+1<CR>==', { desc = '交换行与下一行' })
 
+map("x", "<LeftRelease>", '<LeftRelease>"+y', { desc = "Copy mouse selection to clipboard" })
 map("v", "<c-c>", '"+y', { desc = "Copy to clipboard", silent = false })
 map("i", "<c-v>", function()
   vim.api.nvim_put(vim.fn.getreg("+", 1, true), "c", false, true)

@@ -26,10 +26,24 @@
     // Show nested file diffs; load before Compact so its renderer wraps the summary.
     "npm:pi-codemode-diff",
     // Compact, expandable summaries for codemode calls.
-    "npm:pi-codemode-compact"
+    "npm:pi-codemode-compact",
+    // Clickable footer and editor chrome; also installs alongside pi-starship.
+    "npm:pi-starline"
   ],
   "tidy": {
-    "frameUserMessages": true,
-    "groupTools": false
+    "userMessageStyle": "off",
+    "groupTools": false,
+    "frameFinalReply": true,
+    "icons": true,
+    "toolColors": {
+      "bash": "warning",
+      "read": "toolTitle",
+      "edit": "syntaxVariable",
+      "write": "warning",
+      "grep": "syntaxOperator",
+      "find": "syntaxOperator",
+      "ls": "syntaxOperator",
+      "mcp": "customMessageLabel"
+    }
   }
 }

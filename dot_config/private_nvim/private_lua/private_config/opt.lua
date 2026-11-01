@@ -22,6 +22,9 @@ opt.expandtab = true
 -- force using true color
 opt.termguicolors = true
 
+-- mouse selection in all modes
+opt.mouse = "a"
+
 -- terminal features
 local termfeatures = vim.g.termfeatures or {}
 termfeatures.osc52 = true
