@@ -52,8 +52,22 @@ ss() {
 # ---------------
 #  functions
 # ---------------
+
 dl() {
    scp "$1" ~/tmp
+}
+
+rgv() {
+  if [ "$#" -eq 0 ]; then
+    printf '用法: rgv 搜索词 [路径或 rg 参数...]\n'
+    return 1
+  fi
+
+  rg --line-number --with-filename --no-heading --color=never "$@" |
+    fzf --delimiter ':' \
+        --layout=reverse \
+        --height=80% \
+        --bind 'enter:become(vim +{2} -- {1})'
 }
 
 versions() {

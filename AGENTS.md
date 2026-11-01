@@ -10,6 +10,7 @@ Management Scope
 
 * Manage user-maintained configuration files under `~/.config`, subject to the selection, ignore, and safety rules below.
 * Manage user-maintained Bash configuration files matching `~/.bash*` (for example, `.bashrc` and `.bash_aliases`), excluding history, secrets, and runtime state.
+* Manage user-maintained Pi configuration under `~/.pi/agent` (respecting `PI_CODING_AGENT_DIR`), including settings, keybindings, global instructions, and user-authored resources. Exclude `auth.json`, sessions, caches, installed packages, and other runtime state; review `mcp.json` and `models.json` for secrets before managing them.
 * On local desktop (non-SSH/headless) machines only, manage VS Code `~/.config/Code/User/settings.json` and `~/.config/Code/User/keybindings.json`.
 
 1. File Selection

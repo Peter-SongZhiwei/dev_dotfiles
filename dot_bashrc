@@ -7,8 +7,6 @@ case $- in
 *) return ;;
 esac
 
-echo 'load .bashrc'
-
 # 头上添加
 path_add() {
   case ":$PATH:" in
@@ -52,7 +50,9 @@ export HISTFILESIZE=100000
 # export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
 
 # shell option
-shopt -s autocd     # 路径自动cd
+if (( BASH_VERSINFO[0] >= 4 )); then
+    shopt -s autocd # 路径自动cd
+fi
 shopt -s cdspell    # 自动纠正小拼写错误
 
 # ========================================
@@ -115,7 +115,11 @@ source ~/.bash_aliases
 # opencode tui 解压到/tmp再dlopen /tmp为noexec
 export TMPDIR=~/.cache/tmp
 
-. "$HOME/.cargo/env"
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
 
 # opencode
-export PATH=/home/zte/.opencode/bin:$PATH
+if [ -d "$HOME/.opencode/bin" ]; then
+    path_add "$HOME/.opencode/bin"
+fi

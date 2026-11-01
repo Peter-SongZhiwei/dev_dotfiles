@@ -1,9 +1,5 @@
 local map = vim.keymap.set
 
--- oil configurations
-local oil = require("oil")
-map("n", "<leader>n", oil.toggle_float, { desc = "Toggle oil floating window" })
-
 -- useful map
 map("n", "H", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 map("n", "L", "<cmd>bnext<cr>", { desc = "Next buffer" })

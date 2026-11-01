@@ -2,12 +2,16 @@
   "$schema": "https://raw.githubusercontent.com/gotgenes/pi-packages/main/packages/pi-permission-system/schemas/permissions.schema.json",
   "permission": {
     "*": "allow",
-    "bash": {
-      "*": "allow"
+    "path": {
+      "*": "allow",
+      "id_rsa*": "deny",
+      "id_ed25519*": "deny"
     },
-    "path": "allow",
     "external_directory_read": "allow",
-    "external_directory_write": "allow",
+    "external_directory_write": {
+      "*": "ask",
+      "/tmp/*": "allow"
+    },
     "mcp": "allow",
     "skill": "allow"
   }

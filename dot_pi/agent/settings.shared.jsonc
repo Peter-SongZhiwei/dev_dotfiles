@@ -6,13 +6,15 @@
     "npm:pi-web-access",
     // Delegate tasks to focused subagents and run multi-agent workflows.
     "npm:pi-subagents",
+    // Vim-style editing in Pi's input editor.
+    "npm:pi-vim",
     // Automatic file, cursor, and selection context from connected editors via /ide.
     "npm:pi-ide-context",
     // Native Starship-style footer, configured through /starship.
     "npm:@narumitw/pi-starship",
     // Language learning with writing feedback and bilingual translations.
     "npm:pi-language-tutor",
-    // Deterministic permission gates: deny secrets, destructive bash, unsafe paths.
+    // Permission gates for sensitive files and external writes.
     "npm:@gotgenes/pi-permission-system",
     // Provider usage, limits, balances, and Codex Fast mode.
     "npm:@narumitw/pi-usage",
@@ -27,7 +29,6 @@
   ],
   "tidy": {
     "frameUserMessages": true,
-    "groupTools": false,
-    "userMessageStyle": "rail"
+    "groupTools": false
   }
 }

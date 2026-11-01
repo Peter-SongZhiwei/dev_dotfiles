@@ -1,6 +1,5 @@
 return {
   'dmtrKovalenko/fff',
-  dir = '~/tools/fff',
   build = function()
     -- downloads a prebuilt binary or falls back to cargo build
     require("fff.download").download_or_build_binary()
