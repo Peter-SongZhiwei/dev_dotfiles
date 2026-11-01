@@ -12,8 +12,8 @@
         "apiKey": "{env:ZTE_MAAS_API_KEY}"
       },
       "headers": {
-        "x-uac-app-id": "643672320122",
-        "x-emp-no": "10355455"
+        "x-uac-app-id": "{env:ZTE_UAC_APP_ID}",
+        "x-emp-no": "{env:ZTE_EMP_NO}"
       },
       "models": {
         "deepseek-v4-flash": {

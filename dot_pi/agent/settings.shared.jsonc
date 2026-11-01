@@ -1,5 +1,6 @@
 {
   "theme": "catppuccin",
+  "npmCommand": ["bun"],
   "defaultTools": ["+grep", "+find", "+ls", "+tool_search", "+codemode"],
   "packages": [
     // Web search and URL fetching.

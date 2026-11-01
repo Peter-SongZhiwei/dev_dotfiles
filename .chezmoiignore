@@ -34,6 +34,18 @@ README.md
 .pi/agent/web-search-cache
 .pi/agent/.git
 
+# MacBook 不部署仅适用于 ZTE 环境的配置或员工信息；本地已有文件不会被删除。
+{{ if and (eq .chezmoi.os "darwin") (contains "MacBook" .chezmoi.hostname) }}
+.config/opencode/opencode.jsonc
+.config/opencode/commands
+.config/opencode/skills/icenter-page-guide
+.config/opencode/skills/query-icenter-knowledge-before-action
+.config/opencode/skills/save-knowledge-in-icenter
+.config/pip/pip.conf
+.config/uv/uv.toml
+.config/ty/ty.toml
+{{ end }}
+
 # starship 主题/配置按机器自定义，不用 chezmoi 管理
 .config/starship.toml
 

@@ -1,4 +1,5 @@
 
+{{ if not (and (eq .chezmoi.os "darwin") (contains "MacBook" .chezmoi.hostname)) -}}
 # switch sdk
 ss() {
     local -A sdks=(
@@ -48,6 +49,7 @@ ss() {
     echo "✓ 已切换到: $alias_key"
     echo "  $ETHER_SDK_PATH"
 }
+{{ end -}}
 
 # ---------------
 #  functions
@@ -67,7 +69,7 @@ rgv() {
     fzf --delimiter ':' \
         --layout=reverse \
         --height=80% \
-        --bind 'enter:become(vim +{2} -- {1})'
+        --bind 'enter:become(nvim +{2} -- {1})'
 }
 
 versions() {
