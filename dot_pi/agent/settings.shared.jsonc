@@ -33,6 +33,7 @@
   "tidy": {
     "userMessageStyle": "off",
     "groupTools": false,
+    "collapseTurns": "afterRun",
     "frameFinalReply": true,
     "icons": true,
     "toolColors": {
