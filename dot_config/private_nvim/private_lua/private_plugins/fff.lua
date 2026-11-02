@@ -1,6 +1,14 @@
+local fff_dir = vim.fn.expand('~/tools/fff')
+local use_local = vim.fn.isdirectory(fff_dir) == 1
+if not use_local then
+  vim.fn.system({ 'git', 'clone', '--depth=1', 'https://github.com/dmtrKovalenko/fff.git', fff_dir })
+  use_local = vim.v.shell_error == 0
+end
+
 return {
   'dmtrKovalenko/fff',
-  build = function()
+  dir = use_local and fff_dir or nil,
+  build = use_local and '$HOME/.cargo/bin/cargo build --release -p fff-nvim' or function()
     -- downloads a prebuilt binary or falls back to cargo build
     require("fff.download").download_or_build_binary()
   end,
