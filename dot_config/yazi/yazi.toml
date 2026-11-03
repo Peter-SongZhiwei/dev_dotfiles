@@ -10,6 +10,6 @@ prepend_rules = [
 ]
 
 [mgr]
-linemode = "owner"
+linemode = "none"
 ratio = [1, 2, 5] # layout
 

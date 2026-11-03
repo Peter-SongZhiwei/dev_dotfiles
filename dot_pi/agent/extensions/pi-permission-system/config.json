@@ -14,5 +14,8 @@
     },
     "mcp": "allow",
     "skill": "allow"
-  }
+  },
+  "debugLog": false,
+  "permissionReviewLog": true,
+  "yoloMode": true
 }
