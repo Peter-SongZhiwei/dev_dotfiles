@@ -7,6 +7,21 @@ description: Sync dotfiles across machines via chezmoi and GitHub. Use when aske
 
 Goal: configuration can be edited on any machine. Publish changes with chezmoi + git push, then pull and apply on other machines.
 
+## Mandatory full sync on the four managed machines
+
+These rules apply whenever `USER_TAG` is `NewStarOS`, `187vm`, `187host`, or `18host`. On these machines, a request to "chezmoi sync" (or an equivalent general sync request) means the complete workflow below, not just a pull/apply. **After every chezmoi change is pushed to GitHub from any of these machines, immediately perform the full synchronization on all four machines, even if the original request was only to commit and push. Never stop after `git push` or wait for a separate sync request.**
+
+1. Inspect and review the current machine's local changes, then add them to chezmoi using section 1. Home/target changes that should win must be re-added; intentional source-tree edits must be preserved.
+2. Commit only the intended changes in `~/.local/share/chezmoi` and push them to the GitHub chezmoi repository's `origin/main`. The sync request authorizes this commit and push. If there are no changes to publish, skip the commit and push.
+3. After publishing, fetch, merge, and apply the latest `origin/main` on all four machines, including the machine that pushed:
+   - `NewStarOS`
+   - `187vm`
+   - `187host`
+   - `18host`
+4. Verify `chezmoi status --include=files` is clean on every machine. Finish only when all four machines use the same GitHub revision and managed configuration.
+
+Run the update procedure on the current machine and the remote procedure on each of the other three machines. All safety rules below still apply, especially diff review, secret checks, and stopping for conflicts.
+
 ## Safety rules (always)
 
 - **Never auto-resolve merge conflicts.** If `git merge` / `git pull` reports a conflict, STOP, notify the user, review the conflict, and show a suggested resolution.
@@ -38,7 +53,7 @@ Goal: configuration can be edited on any machine. Publish changes with chezmoi +
 
 ## 3. Update remote machines over SSH
 
-For each host the user names (e.g. `ssh 187vm`):
+For every other machine required by the four-machine sync (for example, `ssh 187vm`):
 
 1. Test passwordless login first:
    ```bash

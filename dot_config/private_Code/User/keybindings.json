@@ -240,6 +240,11 @@
 	//  Panel navigation (ctrl+h/j/k/l)
 	//=========================================================================
 	{
+		"key": "ctrl+j",
+		"command": "workbench.action.navigateDown",
+		"when": "vim.mode == 'Normal'"
+	},
+	{
 		"key": "ctrl+k",
 		"command": "workbench.action.navigateUp",
 		"when": "vim.mode == 'Normal'"
@@ -437,5 +442,14 @@
 	{
 		"key": "ctrl+j",
 		"command": "-workbench.action.togglePanel"
+	},
+	{
+		"key": "alt+o",
+		"command": "openInIntegratedTerminal"
+	},
+	{
+		"key": "alt+o",
+		"command": "-clangd.switchheadersource",
+		"when": "editorTextFocus && resourceLangId == 'c' || editorTextFocus && resourceLangId == 'cpp' || editorTextFocus && resourceLangId == 'cuda-cpp' || editorTextFocus && resourceLangId == 'objective-c' || editorTextFocus && resourceLangId == 'objective-cpp'"
 	}
 ]

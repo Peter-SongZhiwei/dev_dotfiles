@@ -1,12 +1,11 @@
-
 [opener]
-edit = [ # nvim打开
-    { run = 'nvim "$@"', block = true, desc = "Edit"}
+edit = [
+    { run = '${EDITOR:-vi} %s', block = true, desc = "Edit", for = "unix" }
 ]
 
 [open]
 prepend_rules = [
-    { mime = "*", use = "edit"}
+    { mime = "*", use = [ "edit" ] }
 ]
 
 [mgr]
