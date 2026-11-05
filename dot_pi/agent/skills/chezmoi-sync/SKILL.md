@@ -7,6 +7,17 @@ description: Sync dotfiles across machines via chezmoi and GitHub. Use when aske
 
 Goal: configuration can be edited on any machine. Publish changes with chezmoi + git push, then pull and apply on other machines.
 
+## Management scope
+
+Keep this section aligned with `AGENTS.md` in the chezmoi source repository.
+
+- Manage user-maintained configuration files under `~/.config`, subject to the selection, ignore, and safety rules in that file.
+- Manage user-maintained Bash configuration files matching `~/.bash*` (for example, `.bashrc` and `.bash_aliases`), excluding history, secrets, and runtime state.
+- Manage user-maintained Pi configuration under `~/.pi/agent` (respecting `PI_CODING_AGENT_DIR`), including settings, keybindings, global instructions, and user-authored resources. Exclude `auth.json`, sessions, caches, installed packages, and other runtime state; review `mcp.json` and `models.json` for secrets before managing them.
+- On local desktop machines only (not SSH/headless machines), manage VS Code `~/.config/Code/User/settings.json` and `~/.config/Code/User/keybindings.json`.
+- On macOS MacBooks, do not deploy ZTE-specific configuration or employee-identifying values. Keep general shell configuration managed; guard ZTE-only shell sections with chezmoi templates rather than ignoring entire shell files. Do not delete pre-existing local files just because they are excluded from chezmoi.
+- When uncertain whether a file should be managed, leave it unmanaged and report the uncertainty rather than adding it automatically.
+
 ## Mandatory full sync on the four managed machines
 
 These rules apply whenever `USER_TAG` is `NewStarOS`, `187vm`, `187host`, or `18host`. On these machines, a request to "chezmoi sync" (or an equivalent general sync request) means the complete workflow below, not just a pull/apply. **After every chezmoi change is pushed to GitHub from any of these machines, immediately perform the full synchronization on all four machines, even if the original request was only to commit and push. Never stop after `git push` or wait for a separate sync request.**
@@ -29,12 +40,13 @@ Run the update procedure on the current machine and the remote procedure on each
 - Do not overwrite or delete local changes without reviewing their purpose.
 - Never commit secrets.
 - Keep changes minimal; do not add unrelated files.
-- Do not commit or push unless the user asked for it.
+- Do not commit or push for edit/review-only requests. An explicit sync request authorizes the commit and push described above.
+- Preserve intentional host-specific configuration and report any uncommitted remote source edits.
 
 ## 1. Publish local changes (on the machine where config changed)
 
 1. Inspect state: `chezmoi status --include=files` and `chezmoi diff --include=files`.
-2. For files where the home/target version should win, run `chezmoi re-add <target>`.
+2. For already-managed files where the home/target version should win, run `chezmoi re-add <target>`. If re-add skips a template, make a minimal edit to the source template instead; preserve its directives and never replace it with rendered machine-specific output.
 3. For files edited directly in the chezmoi source tree, keep the source version.
 4. Stage only the intended files: `git add <paths>`.
 5. Commit with a short, specific message.
@@ -48,7 +60,7 @@ Run the update procedure on the current machine and the remote procedure on each
 2. Check `git status -sb` and `git log HEAD..origin/main --oneline`.
 3. `git merge origin/main` (this repo uses merge commits).
    - If conflict: STOP, list conflicted files, and notify the user.
-4. `chezmoi apply` (use `--force` only when the change is understood).
+4. `chezmoi apply` (use `--force` only after reviewing the complete diff and understanding every change it will overwrite).
 5. Verify `chezmoi status --include=files` is clean.
 
 ## 3. Update remote machines over SSH
@@ -67,17 +79,21 @@ For every other machine required by the four-machine sync (for example, `ssh 187
    - If no push is needed, it is enough that the remote can pull (fetch) from origin.
    - When a proxy is needed, use port 1080: set `export PROXY_PORT=1080` in `~/.bashrc.local` (machine-specific, not managed by chezmoi) and git `http.proxy`/`https.proxy` to `http://127.0.0.1:1080`.
    - If there are SSH or network connection problems, report them to the user first, then execute subsequent operations.
-3. Inspect the remote state before changing anything:
+3. Inspect the remote Git and chezmoi state before changing anything:
    ```bash
    ssh <host> 'cd ~/.local/share/chezmoi && git fetch origin && git status -sb && git log HEAD..origin/main --oneline'
+   ssh <host> 'cd ~/.local/share/chezmoi && chezmoi status --include=files && chezmoi diff --include=files'
    ```
-4. If the remote tree is dirty or has local commits, report that merging may conflict before proceeding.
-5. Merge and apply on the remote:
-   ```bash
-   ssh <host> 'cd ~/.local/share/chezmoi && git merge origin/main && chezmoi apply'
-   ```
+   If non-interactive SSH cannot find chezmoi, use `~/.local/bin/chezmoi` in remote commands.
+4. If the remote tree is dirty or has local commits, report that merging may conflict before proceeding. Preserve the dirty source tree; never reset it to make the sync pass.
+5. Merge on the remote: `ssh <host> 'cd ~/.local/share/chezmoi && git merge origin/main'`.
    If merge conflicts occur, STOP and report the host and conflicted files.
-6. Verify on the remote: `ssh <host> 'cd ~/.local/share/chezmoi && chezmoi status --include=files'`.
+6. Review the post-merge `chezmoi diff`. Preserve reviewed target-only changes with `chezmoi re-add` or a minimal source edit before applying. On SSH/headless machines, ensure VS Code settings and keybindings are excluded.
+7. Apply on the remote: `ssh <host> 'cd ~/.local/share/chezmoi && chezmoi apply'`. Use `--force` only under the same reviewed-diff rule as a local apply.
+8. Verify the remote revision and chezmoi state:
+   ```bash
+   ssh <host> 'cd ~/.local/share/chezmoi && git rev-parse HEAD origin/main && chezmoi status --include=files'
+   ```
 
 ## Conflict notification format
 
@@ -88,8 +104,3 @@ When a conflict is detected, report:
 - a review of the conflict and a suggested resolution
 
 Then wait for the user to decide how to resolve.
-
-## Scope reminders
-
-- Manage `~/.config` and `~/.bash*` per AGENTS.md.
-- On SSH/headless machines, do NOT manage VS Code `settings.json` or `keybindings.json`.

@@ -30,7 +30,7 @@ function merge(local: Settings, shared: Settings): Settings {
 export default function (pi: ExtensionAPI) {
   let running = false;
   pi.registerCommand("config-sync", {
-    description: "Merge shared settings, reconcile packages, and reload",
+    description: "Merge shared settings, update Pi and packages, and reload",
     handler: async (args, ctx) => {
       if (args.trim()) {
         ctx.ui.notify("Usage: /config-sync", "error");
@@ -58,10 +58,10 @@ export default function (pi: ExtensionAPI) {
             rmSync(temporaryPath, { force: true });
           }
         });
-        ctx.ui.notify("Settings synced. Reconciling packages…", "info");
-        const result = await pi.exec("pi", ["update", "--extensions"], { cwd: agentDir, timeout: 120_000 });
+        ctx.ui.notify("Settings synced. Updating Pi and packages…", "info");
+        const result = await pi.exec("pi", ["update", "--all"], { cwd: agentDir, timeout: 120_000 });
         if (result.code !== 0 || result.killed) {
-          throw new Error("Package sync failed; settings were kept. Retry with pi update --extensions.");
+          throw new Error("Update failed; settings were kept. Retry with pi update --all.");
         }
       } catch (error) {
         ctx.ui.notify(error instanceof Error ? error.message : String(error), "error");

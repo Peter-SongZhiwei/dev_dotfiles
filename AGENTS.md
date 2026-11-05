@@ -11,7 +11,7 @@ Management Scope
 * Manage user-maintained configuration files under `~/.config`, subject to the selection, ignore, and safety rules below.
 * Manage user-maintained Bash configuration files matching `~/.bash*` (for example, `.bashrc` and `.bash_aliases`), excluding history, secrets, and runtime state.
 * Manage user-maintained Pi configuration under `~/.pi/agent` (respecting `PI_CODING_AGENT_DIR`), including settings, keybindings, global instructions, and user-authored resources. Exclude `auth.json`, sessions, caches, installed packages, and other runtime state; review `mcp.json` and `models.json` for secrets before managing them.
-* On local desktop (non-SSH/headless) machines only, manage VS Code `~/.config/Code/User/settings.json` and `~/.config/Code/User/keybindings.json`.
+* On local desktop machines only (not SSH/headless machines), manage VS Code `~/.config/Code/User/settings.json` and `~/.config/Code/User/keybindings.json`.
 * On macOS MacBooks, do not deploy ZTE-specific configuration or employee-identifying values. Keep general shell configuration managed; guard ZTE-only shell sections with chezmoi templates rather than ignoring entire shell files. Do not delete pre-existing local files just because they are excluded from chezmoi.
 
 1. File Selection
@@ -79,7 +79,7 @@ After modifying managed configuration:
 
 * When syncing to remote machines, first confirm that remote SSH login works (passwordless). After connecting, confirm the remote machine's network connectivity (e.g. whether it can reach GitHub/origin, and whether a proxy is required). If there are SSH or network connection problems, report them to the user first, then execute subsequent operations.
 * Check external connectivity (e.g. google.com) before checking GitHub. If no push is needed, only pull/fetch access to origin is required. When a proxy is needed, use port 1080: set `export PROXY_PORT=1080` in `~/.bashrc.local` (machine-specific, not managed by chezmoi) and git `http.proxy`/`https.proxy` to `http://127.0.0.1:1080`.
-* When connected over SSH (headless, no GUI), sync with `chezmoi apply` and adopt local tweaks with `chezmoi add` as usual.
+* When connected over SSH (headless, no GUI), sync with `chezmoi apply`. Use `chezmoi re-add` for local tweaks to already-managed files and `chezmoi add` only for new files.
 * Do NOT manage VS Code `settings.json` or `keybindings.json` on SSH/headless machines — they are desktop (GUI) configs and do not apply there.
 * Keep SSH-side changes minimal and terminal-focused (shell, tmux, nvim, git).
 
