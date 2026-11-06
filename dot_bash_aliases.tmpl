@@ -72,6 +72,73 @@ rgv() {
         --bind 'enter:become(nvim +{2} -- {1})'
 }
 
+# Select and attach to an active tmux session with fzf.
+tattach() {
+    local sessions selection session
+
+    if ! command -v tmux >/dev/null 2>&1; then
+        printf 'tmux is not installed.\n'
+        return 1
+    fi
+    if ! command -v fzf >/dev/null 2>&1; then
+        printf 'fzf is required for tattach.\n'
+        return 1
+    fi
+
+    if ! sessions=$(tmux list-sessions 2>/dev/null) || [[ -z "$sessions" ]]; then
+        printf 'No active tmux sessions.\n'
+        return 0
+    fi
+
+    selection=$(
+        printf '%s\n' "$sessions" | fzf \
+            --prompt='Attach tmux session > ' \
+            --header='↑/↓: select | Enter: attach | Esc: cancel'
+    ) || return 0
+    [[ -z "$selection" ]] && return 0
+    session=${selection%%:*}
+
+    if [[ -n "${TMUX:-}" ]]; then
+        tmux switch-client -t "=$session"
+    else
+        tmux attach-session -t "=$session"
+    fi
+}
+
+# Select and kill an active tmux session with fzf.
+ktmux() {
+    local sessions selection session reply
+
+    if ! command -v tmux >/dev/null 2>&1; then
+        printf 'tmux is not installed.\n'
+        return 1
+    fi
+    if ! command -v fzf >/dev/null 2>&1; then
+        printf 'fzf is required for ktmux.\n'
+        return 1
+    fi
+
+    if ! sessions=$(tmux list-sessions 2>/dev/null) || [[ -z "$sessions" ]]; then
+        printf 'No active tmux sessions.\n'
+        return 0
+    fi
+
+    selection=$(
+        printf '%s\n' "$sessions" | fzf \
+            --prompt='Kill tmux session > ' \
+            --header='↑/↓: select | Enter: choose | Esc: cancel'
+    ) || return 0
+    [[ -z "$selection" ]] && return 0
+    session=${selection%%:*}
+
+    read -r -p "Kill tmux session '$session'? [y/N] " reply || return 0
+    if [[ "$reply" == [yY] ]]; then
+        tmux kill-session -t "=$session"
+    else
+        printf 'Cancelled.\n'
+    fi
+}
+
 versions() {
     local tool output version rc status
     local -a cmd
@@ -192,7 +259,7 @@ function y() {
 }
 
 # fuzzy vim
-fv() {
+vimf() {
     local f
     f=$(fzf --preview 'bat --color=always --style=numbers {} 2>/dev/null || cat {}')
     [ -z "$f" ] && return
@@ -203,7 +270,7 @@ fv() {
 }
 
 # fuzzy cd
-fcd() {
+cdf() {
   local sel
   sel=$(fd --hidden --exclude .git 2>/dev/null || find . -not -path '*/.git/*')
   sel=$(echo "$sel" | fzf --preview '

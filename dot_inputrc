@@ -18,11 +18,14 @@ set completion-ignore-case on
 "\e\e[C": forward-word
 "\e\e[D": backward-word
 
-# 开启菜单补全：按 Tab 时，从列表中依次选择并填入命令行
-# set menu-complete-display-prefix on
-# TAB: menu-complete
-# # 可选：反向遍历（Shift+Tab）
-# "\e[Z": menu-complete-backward
+# 多个候选时立即列出全部候选
+set show-all-if-ambiguous on
+
+# 开启菜单补全：后续按 Tab 依次选择候选
+set menu-complete-display-prefix on
+TAB: menu-complete
+# Shift+Tab 反向选择；Rio 发送 ^[[Z，即 ESC [ Z
+"\e[Z": menu-complete-backward
 
 # 关闭 readline bell提示音（空行按退格、Tab 补全失败等）；程序输出的 \a 不受影响
 set bell-style none
