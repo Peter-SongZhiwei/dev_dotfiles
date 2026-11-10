@@ -29,7 +29,8 @@ These rules apply whenever `USER_TAG` is `NewStarOS`, `187vm`, `187host`, or `18
    - `187vm`
    - `187host`
    - `18host`
-4. Verify `chezmoi status --include=files` is clean on every machine. Finish only when all four machines use the same GitHub revision and managed configuration.
+4. On each machine, after `chezmoi apply`, run `pi update --all` to update both Pi and all installed Pi packages.
+5. Verify `chezmoi status --include=files` is clean on every machine. Finish only when all four machines use the same GitHub revision and managed configuration and the Pi update has completed successfully.
 
 Run the update procedure on the current machine and the remote procedure on each of the other three machines. All safety rules below still apply, especially diff review, secret checks, and stopping for conflicts.
 
@@ -61,7 +62,8 @@ Run the update procedure on the current machine and the remote procedure on each
 3. `git merge origin/main` (this repo uses merge commits).
    - If conflict: STOP, list conflicted files, and notify the user.
 4. `chezmoi apply` (use `--force` only after reviewing the complete diff and understanding every change it will overwrite).
-5. Verify `chezmoi status --include=files` is clean.
+5. Update Pi and all installed Pi packages: `pi update --all`. Run this after `chezmoi apply` so the update uses the synced package declarations. If it fails, report the error and do not claim the full sync succeeded.
+6. Verify `chezmoi status --include=files` is clean.
 
 ## 3. Update remote machines over SSH
 
@@ -90,7 +92,8 @@ For every other machine required by the four-machine sync (for example, `ssh 187
    If merge conflicts occur, STOP and report the host and conflicted files.
 6. Review the post-merge `chezmoi diff`. Preserve reviewed target-only changes with `chezmoi re-add` or a minimal source edit before applying. On SSH/headless machines, ensure VS Code settings and keybindings are excluded.
 7. Apply on the remote: `ssh <host> 'cd ~/.local/share/chezmoi && chezmoi apply'`. Use `--force` only under the same reviewed-diff rule as a local apply.
-8. Verify the remote revision and chezmoi state:
+8. Update Pi and all installed Pi packages on the remote: `ssh <host> 'pi update --all'`. Report any failure and do not claim the full sync succeeded.
+9. Verify the remote revision and chezmoi state:
    ```bash
    ssh <host> 'cd ~/.local/share/chezmoi && git rev-parse HEAD origin/main && chezmoi status --include=files'
    ```
