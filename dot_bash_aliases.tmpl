@@ -342,7 +342,7 @@ alias osr="run opencode service restart"
 #  git
 # ---------------
 alias cdws='run cd "$(git rev-parse --show-toplevel 2>/dev/null)" || echo "不在 Git 仓库中"'
-alias gl='run git log --oneline --graph'
+alias gl="run git log --graph --pretty=format:'%C(auto)%h %cd %s%d' --date=short --all"
 alias gs='run git status'
 alias grs='run git reset --soft HEAD^'
 alias grh='run git reset --hard HEAD^'
