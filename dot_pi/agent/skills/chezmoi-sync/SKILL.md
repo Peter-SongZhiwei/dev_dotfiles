@@ -5,7 +5,7 @@ description: Sync dotfiles across machines via chezmoi and GitHub. Use when aske
 
 # Chezmoi + GitHub dotfiles sync
 
-Goal: configuration can be edited on any machine. Publish changes with chezmoi + git push, then pull and apply on other machines.
+Goal: configuration can be edited on any machine. Publish changes with chezmoi + git push; from a company machine, pull and apply them on the other company machines.
 
 ## Management scope
 
@@ -17,6 +17,10 @@ Keep this section aligned with `AGENTS.md` in the chezmoi source repository.
 - On local desktop machines only (not SSH/headless machines), manage VS Code `~/.config/Code/User/settings.json` and `~/.config/Code/User/keybindings.json`.
 - On macOS MacBooks, do not deploy ZTE-specific configuration or employee-identifying values. Keep general shell configuration managed; guard ZTE-only shell sections with chezmoi templates rather than ignoring entire shell files. Do not delete pre-existing local files just because they are excluded from chezmoi.
 - When uncertain whether a file should be managed, leave it unmanaged and report the uncertainty rather than adding it automatically.
+
+## Home Mac and other non-company machines
+
+When `USER_TAG` is not `NewStarOS`, `187vm`, `187host`, or `18host`, a general chezmoi sync means syncing only this machine with GitHub. Review and publish intended local changes if any (section 1), then fetch, merge, review, and apply `origin/main` locally (section 2). A sync request authorizes the reviewed commit and push, but never authorizes SSH to the four company machines from here. Do not claim they are synchronized; changes pushed from here are distributed when a sync is later run on a company machine.
 
 ## Mandatory full sync on the four managed machines
 

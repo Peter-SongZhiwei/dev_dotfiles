@@ -6,6 +6,7 @@
 
 # Chezmoi sync
 
+- When `USER_TAG` is not `NewStarOS`, `187vm`, `187host`, or `18host`, a general sync request means review and publish intended local changes to GitHub if any, then fetch, merge, and apply `origin/main` on this machine only. Do not SSH to the four company machines or claim they are synchronized; changes pushed from here are distributed by a later sync on a company machine.
 - These rules apply whenever `USER_TAG` is `NewStarOS`, `187vm`, `187host`, or `18host`. A request to sync chezmoi means the full publish-and-distribute workflow:
   1. Review the current machine's local configuration changes and add them to chezmoi. Use `chezmoi re-add` when the home/target version should win; preserve intentional edits made directly in the chezmoi source tree.
   2. Commit only the intended changes in `~/.local/share/chezmoi` and push the repository to its GitHub `origin/main`.
