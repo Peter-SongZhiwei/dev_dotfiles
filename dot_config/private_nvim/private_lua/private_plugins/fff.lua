@@ -16,7 +16,7 @@ return {
   -- for nixos:
   -- build = "nix run .#release",
   opts = {
-    prompt = '👉👉👉  ',
+    prompt = '🦢 ',
     debug = {
       enabled = true,
       show_scores = true,

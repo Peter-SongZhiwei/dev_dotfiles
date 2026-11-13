@@ -1,4 +1,51 @@
 
+# ---------------
+#  edit
+# ---------------
+alias vim=nvim
+alias vi="nvim --clean"
+alias vssh="vim ~/.ssh/config"
+alias vb='vim ~/.bashrc'
+alias vba='vim ~/.bash_aliases'
+alias vbs='vim ~/.bash_secrets'
+alias vbl='vim ~/.bashrc.local'
+alias vin='vim ~/.inputrc'
+alias vsudo='sudo EDITOR=nvim visudo'
+alias sb='source ~/.bashrc'
+alias sba='source ~/.bash_aliases'
+alias stmux='run tmux source-file ~/.config/tmux/tmux.conf'
+alias rl='run exec $SHELL -l' # 重新登陆 用新的SHELL进程替换当前SHELL
+
+# ---------------
+#  tools
+# ---------------
+alias ls="eza --icons=auto"
+alias ll="eza -l --icons"
+alias l=ll
+alias la="ll -a"
+alias cd=z
+alias osr="run opencode service restart"
+
+# ---------------
+#  git
+# ---------------
+alias cdws='run cd "$(git rev-parse --show-toplevel 2>/dev/null)" || echo "不在 Git 仓库中"'
+alias gl="run git log --graph --pretty=format:'%C(auto)%h %cd %s%d' --date=short --all"
+alias gb='run git branch -avv'
+alias gs='run git status'
+alias grs='run git reset --soft HEAD^'
+alias grh='run git reset --hard HEAD^'
+alias gr='run git reset'
+alias gc='run git reset --hard HEAD'
+alias gspr='run git stash && git pull --rebase'
+alias gsp='run git stash pop'
+alias gclean='run git reset --hard HEAD && git clean -fd :/'
+alias gsync-hard='run git fetch --prune && git reset --hard @{u} && git clean -fd :/'
+alias gupdate='run git reset --hard HEAD && git clean -fd :/ && git pull'
+
+
+
+
 {{ if not (and (eq .chezmoi.os "darwin") (contains "MacBook" .chezmoi.hostname)) -}}
 # switch sdk
 ss() {
@@ -54,6 +101,30 @@ ss() {
 # ---------------
 #  functions
 # ---------------
+#
+livegrep() (
+    cd -- "${1:-.}" || return
+
+    # Debian/Ubuntu name the bat executable "batcat".
+    viewer=bat
+    command -v bat >/dev/null 2>&1 || viewer=batcat
+
+    FZF_DEFAULT_COMMAND='' fzf \
+        --disabled \
+        --ansi \
+        --layout=reverse \
+        --delimiter=: \
+        --prompt='Search contents> ' \
+        --header='Type to search · Ctrl+F: fuzzy-filter results · Esc: close' \
+        --bind 'change:reload:rg --line-number --no-heading --color=always --smart-case -- {q} . || true' \
+        --bind 'ctrl-f:unbind(change)+enable-search+clear-query+change-prompt(Fuzzy filter> )' \
+        --bind 'enter:become(nvim +{2} -- {1})' \
+        --preview "$viewer --color=always --style=numbers --highlight-line {2} -- {1}" \
+        --preview-window='right,60%,+{2}/2' \
+        < /dev/null
+)
+
+bind -x '"\C-g":livegrep'
 
 dl() {
    scp "$1" ~/tmp
@@ -73,7 +144,7 @@ rgv() {
 }
 
 # Select and attach to an active tmux session with fzf.
-tattach() {
+tumxa() {
     local sessions selection session
 
     if ! command -v tmux >/dev/null 2>&1; then
@@ -106,7 +177,7 @@ tattach() {
 }
 
 # Select and kill an active tmux session with fzf.
-ktmux() {
+tmuxk() {
     local sessions selection session
 
     if ! command -v tmux >/dev/null 2>&1; then
@@ -308,49 +379,5 @@ show_path() {
         fi
     done <<< "${val//:/$'\n'}"
 }
-
-
-
-# ---------------
-#  edit
-# ---------------
-alias vim=nvim
-alias vi="nvim --clean"
-alias vssh="vim ~/.ssh/config"
-alias vb='vim ~/.bashrc'
-alias vba='vim ~/.bash_aliases'
-alias vbs='vim ~/.bash_secrets'
-alias vbl='vim ~/.bashrc.local'
-alias vin='vim ~/.inputrc'
-alias vsudo='sudo EDITOR=vim visudo'
-alias sb='source ~/.bashrc'
-alias sba='source ~/.bash_aliases'
-alias stmux='run tmux source-file ~/.config/tmux/tmux.conf'
-alias rl='run exec $SHELL -l' # 重新登陆 用新的SHELL进程替换当前SHELL
-
-# ---------------
-#  tools
-# ---------------
-alias ls="eza --icons=auto"
-alias ll="eza -l --icons"
-alias l=ll
-alias la="ll -a"
-alias cd=z
-alias osr="run opencode service restart"
-
-# ---------------
-#  git
-# ---------------
-alias cdws='run cd "$(git rev-parse --show-toplevel 2>/dev/null)" || echo "不在 Git 仓库中"'
-alias gl="run git log --graph --pretty=format:'%C(auto)%h %cd %s%d' --date=short --all"
-alias gs='run git status'
-alias grs='run git reset --soft HEAD^'
-alias grh='run git reset --hard HEAD^'
-alias gr='run git reset'
-alias gc='run git reset --hard HEAD'
-alias gspr='run git stash && git pull --rebase'
-alias gsp='run git stash pop'
-alias gclean='run git reset --hard HEAD && git clean -fd :/'
-alias gupdate='run git reset --hard HEAD && git clean -fd :/ && git pull'
 
 
