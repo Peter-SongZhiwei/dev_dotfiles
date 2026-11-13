@@ -103,6 +103,8 @@ fi
 # bash 默认的 transpose-chars 保持可用。
 FZF_CTRL_T_COMMAND=
 eval "$(fzf --bash)" # 已同时包含 key-bindings.bash 和 completion.bash
+# Keep Ctrl-L clearing the terminal even if an initialization script changes Readline bindings.
+bind '"\C-l": clear-screen'
 export FZF_DEFAULT_OPTS='--height 40% --layout=default --info=inline'
 
 # starship只初始化一次
