@@ -5,7 +5,7 @@ description: Sync dotfiles across machines via chezmoi and GitHub. Use when aske
 
 # Chezmoi + GitHub dotfiles sync
 
-Goal: configuration can be edited on any machine. Publish changes with chezmoi + git push, then pull and apply on other machines.
+Goal: configuration can be edited on any machine. Publish changes with chezmoi + git push; from a company machine, pull and apply them on the other company machines.
 
 ## 0. Determine scope and run the mandatory version check
 
