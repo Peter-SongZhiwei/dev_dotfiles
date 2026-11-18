@@ -41,6 +41,9 @@ README.md
 .config/opencode/skills/icenter-page-guide
 .config/opencode/skills/query-icenter-knowledge-before-action
 .config/opencode/skills/save-knowledge-in-icenter
+.pi/agent/skills/icenter-page-guide
+.pi/agent/skills/query-icenter-knowledge-before-action
+.pi/agent/skills/save-knowledge-in-icenter
 .config/pip/pip.conf
 .config/uv/uv.toml
 .config/ty/ty.toml
