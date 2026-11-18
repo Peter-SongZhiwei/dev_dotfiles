@@ -7,6 +7,42 @@ description: Sync dotfiles across machines via chezmoi and GitHub. Use when aske
 
 Goal: configuration can be edited on any machine. Publish changes with chezmoi + git push; from a company machine, pull and apply them on the other company machines.
 
+## 0. Determine scope and run the mandatory version check
+
+Before any `chezmoi re-add`/`chezmoi add`, Git fetch/merge/pull/push, `chezmoi apply`, or Pi update, classify the local machine:
+
+- **ZTE scope:** `USER_TAG` is non-empty. Inventory the local machine and all other ZTE machines over SSH.
+- **Standalone Mac scope:** the OS is macOS and `USER_TAG` is empty or unset. Inventory only the Mac itself.
+- Never attempt SSH between the ZTE group and the standalone Mac, including for version checks or unreachable-machine placeholders.
+
+Run:
+
+```bash
+bash ~/.config/chezmoi-sync/versions.sh --all
+```
+
+If the applied script is not available yet, run the source copy instead:
+
+```bash
+bash ~/.local/share/chezmoi/dot_config/chezmoi-sync/executable_versions.sh --all
+```
+
+The script always reports the local machine. In ZTE scope it uses passwordless SSH for the other entries in `ZTE_MACHINES`; it sends itself over SSH so the check works before remotes receive the script. In Mac scope it performs no SSH operations.
+
+Reports are scope-owned and chezmoi-managed:
+
+- ZTE: `~/.config/chezmoi-sync/software-versions-zte.md`
+- Mac: `~/.config/chezmoi-sync/software-versions-mac.md`
+
+Review the scope's report, its path, and any version-query failures before continuing. Each sync updates only its own scope's report, preventing Mac and ZTE jobs from overwriting each other. Use `chezmoi add` the first time a report is created and `chezmoi re-add` thereafter, then commit and distribute it with the intended configuration changes. Do not hand-edit generated reports or upgrade tools merely to make versions uniform.
+
+## Synchronization topology
+
+- The ZTE machines synchronize directly with each other through GitHub plus SSH. A sync or chezmoi push from any ZTE machine requires the full ZTE workflow below.
+- The standalone Mac synchronizes only with GitHub and itself. A Mac sync never runs the remote-ZTE procedure, and a Mac push does not trigger immediate ZTE synchronization.
+- A ZTE push does not trigger immediate Mac synchronization. Shared changes propagate asynchronously: Mac changes arrive at ZTE machines on their next sync, and ZTE changes arrive at the Mac on its next sync.
+- GitHub is the only connection between the two groups. Do not add the Mac to `ZTE_MACHINES` or attempt reverse SSH from the Mac.
+
 ## Management scope
 
 Keep this section aligned with `AGENTS.md` in the chezmoi source repository.
@@ -18,25 +54,34 @@ Keep this section aligned with `AGENTS.md` in the chezmoi source repository.
 - On macOS MacBooks, do not deploy ZTE-specific configuration or employee-identifying values. Keep general shell configuration managed; guard ZTE-only shell sections with chezmoi templates rather than ignoring entire shell files. Do not delete pre-existing local files just because they are excluded from chezmoi.
 - When uncertain whether a file should be managed, leave it unmanaged and report the uncertainty rather than adding it automatically.
 
-## Home Mac and other non-company machines
+## Mandatory full sync on ZTE machines
 
-When `USER_TAG` is not `NewStarOS`, `187vm`, `187host`, or `18host`, a general chezmoi sync means syncing only this machine with GitHub. Review and publish intended local changes if any (section 1), then fetch, merge, review, and apply `origin/main` locally (section 2). A sync request authorizes the reviewed commit and push, but never authorizes SSH to the four company machines from here. Do not claim they are synchronized; changes pushed from here are distributed when a sync is later run on a company machine.
+These rules apply whenever `USER_TAG` is non-empty. A request to "chezmoi sync" (or an equivalent general sync request) means the complete workflow below, not just a pull/apply. The current ZTE inventory is `NewStarOS`, `187vm`, `187host`, `18host`, and `18vm`; `NewStartOS` is normalized to the report label `NewStarOS`. **After every chezmoi change is pushed to GitHub from any ZTE machine, immediately perform the full synchronization on all five ZTE machines, even if the original request was only to commit and push. Never stop after `git push` or wait for a separate sync request.**
 
-## Mandatory full sync on the four managed machines
-
-These rules apply whenever `USER_TAG` is `NewStarOS`, `187vm`, `187host`, or `18host`. On these machines, a request to "chezmoi sync" (or an equivalent general sync request) means the complete workflow below, not just a pull/apply. **After every chezmoi change is pushed to GitHub from any of these machines, immediately perform the full synchronization on all four machines, even if the original request was only to commit and push. Never stop after `git push` or wait for a separate sync request.**
-
-1. Inspect and review the current machine's local changes, then add them to chezmoi using section 1. Home/target changes that should win must be re-added; intentional source-tree edits must be preserved.
-2. Commit only the intended changes in `~/.local/share/chezmoi` and push them to the GitHub chezmoi repository's `origin/main`. The sync request authorizes this commit and push. If there are no changes to publish, skip the commit and push.
-3. After publishing, fetch, merge, and apply the latest `origin/main` on all four machines, including the machine that pushed:
+1. Complete the all-machine software version check in section 0 and review its Markdown report.
+2. Inspect and review the current machine's local changes, then add them to chezmoi using section 1. Home/target changes that should win must be re-added; intentional source-tree edits must be preserved.
+3. Commit only the intended changes in `~/.local/share/chezmoi` and push them to the GitHub chezmoi repository's `origin/main`. The sync request authorizes this commit and push. If there are no changes to publish, skip the commit and push.
+4. After publishing, fetch, merge, and apply the latest `origin/main` on all five machines, including the machine that pushed:
    - `NewStarOS`
    - `187vm`
    - `187host`
    - `18host`
-4. On each machine, after `chezmoi apply`, run `pi update --all` to update both Pi and all installed Pi packages.
-5. Verify `chezmoi status --include=files` is clean on every machine. Finish only when all four machines use the same GitHub revision and managed configuration and the Pi update has completed successfully.
+   - `18vm`
+5. On each machine, after `chezmoi apply`, run `pi update --all` to update both Pi and all installed Pi packages.
+6. Verify `chezmoi status --include=files` is clean on every machine. Finish only when all five machines use the same GitHub revision and managed configuration and the Pi update has completed successfully.
 
-Run the update procedure on the current machine and the remote procedure on each of the other three machines. All safety rules below still apply, especially diff review, secret checks, and stopping for conflicts.
+Run the update procedure on the current ZTE machine and the remote procedure on each of the other four ZTE machines. All safety rules below still apply, especially diff review, secret checks, and stopping for conflicts.
+
+## Standalone Mac GitHub-only sync
+
+On macOS without `USER_TAG`, a sync request means only this workflow:
+
+1. Complete the local-only version check in section 0 and add/re-add `software-versions-mac.md`.
+2. Review and publish intended local changes using section 1.
+3. Fetch, merge, apply, update Pi, and verify locally using section 2.
+4. Finish when the local GitHub revision and chezmoi state are clean. Do not run section 3 and do not wait for or initiate ZTE synchronization.
+
+Preserve all macOS ignore/template rules. The OS-based guards exclude ZTE-specific configuration without deleting pre-existing local Mac files.
 
 ## Safety rules (always)
 
@@ -71,7 +116,7 @@ Run the update procedure on the current machine and the remote procedure on each
 
 ## 3. Update remote machines over SSH
 
-For every other machine required by the four-machine sync (for example, `ssh 187vm`):
+For every other ZTE machine required by the five-machine sync (for example, `ssh 187vm`). Never run this procedure for the standalone Mac:
 
 1. Test passwordless login first:
    ```bash

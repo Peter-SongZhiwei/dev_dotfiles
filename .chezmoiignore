@@ -35,7 +35,7 @@ README.md
 .pi/agent/.git
 
 # MacBook 不部署仅适用于 ZTE 环境的配置或员工信息；本地已有文件不会被删除。
-{{ if and (eq .chezmoi.os "darwin") (contains "MacBook" .chezmoi.hostname) }}
+{{ if eq .chezmoi.os "darwin" }}
 .config/opencode/opencode.jsonc
 .config/opencode/commands
 .config/opencode/skills/icenter-page-guide

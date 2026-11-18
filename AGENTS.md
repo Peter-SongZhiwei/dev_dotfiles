@@ -19,7 +19,7 @@ Management Scope
 * Manage only user-maintained configuration files that are useful for reproducing the development environment.
 * Ignore empty directories unless their existence is explicitly required by an application.
 * Ignore empty files unless they have a meaningful purpose.
-* Ignore temporary files, caches, logs, backups, swap files, and generated artifacts.
+* Ignore temporary files, caches, logs, backups, swap files, and generated artifacts. The scope-owned chezmoi-sync version reports are intentional managed inventory documents, not disposable artifacts.
 * Ignore application runtime state, session state, lock files, and machine-specific data.
 * Do not recursively add an entire application directory without inspecting its contents.
 * Preserve the original configuration structure whenever possible.
@@ -33,6 +33,10 @@ Management Scope
 
 3. Synchronization
 
+* Classify machines before synchronization. A non-empty `USER_TAG` selects ZTE scope; macOS with `USER_TAG` empty or unset selects standalone Mac scope.
+* ZTE synchronization includes all five ZTE machines (`NewStarOS`, `187vm`, `187host`, `18host`, and `18vm`) through GitHub and SSH. Every ZTE sync or chezmoi push triggers the full five-machine ZTE workflow.
+* The standalone Mac synchronizes only through GitHub and on itself. Never attempt SSH between the Mac and ZTE machines. A Mac push does not trigger immediate ZTE synchronization, and a ZTE push does not trigger immediate Mac synchronization; changes propagate when the other group next syncs.
+* Before syncing, generate only the current scope's version report: `software-versions-zte.md` for all ZTE machines or `software-versions-mac.md` for the Mac alone. Manage and publish each report with that scope's changes; never overwrite the other scope's report.
 * Treat chezmoi’s source state as the canonical repository of managed configuration.
 * Before synchronization, inspect differences between the current system and chezmoi’s source state.
 * Preserve existing templates, conditional configuration, and file attributes.
