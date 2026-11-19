@@ -1,16 +1,16 @@
-local fff_dir = vim.fn.expand('~/tools/fff')
-local use_local = vim.fn.isdirectory(fff_dir) == 1
-if not use_local then
-  vim.fn.system({ 'git', 'clone', '--depth=1', 'https://github.com/dmtrKovalenko/fff.git', fff_dir })
-  use_local = vim.v.shell_error == 0
-end
-
 return {
   'dmtrKovalenko/fff',
-  dir = use_local and fff_dir or nil,
-  build = use_local and '$HOME/.cargo/bin/cargo build --release -p fff-nvim' or function()
-    -- downloads a prebuilt binary or falls back to cargo build
-    require("fff.download").download_or_build_binary()
+  -- Prebuilt binaries may require a newer glibc than the host provides.
+  -- Use our own wait so lazy.nvim's 120-second limit cannot stop a fresh build.
+  build = function(plugin)
+    local result = vim.system({
+      vim.env.HOME .. '/.cargo/bin/cargo',
+      'build',
+      '--release',
+      '-p',
+      'fff-nvim',
+    }, { cwd = plugin.dir, text = true }):wait()
+    if result.code ~= 0 then error('fff.nvim build failed:\n' .. result.stderr) end
   end,
   lazy = false, -- the plugin lazy-initialises itself
   -- for nixos:
