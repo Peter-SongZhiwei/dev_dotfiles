@@ -36,11 +36,15 @@ README.md
 
 # MacBook 不部署仅适用于 ZTE 环境的配置或员工信息；本地已有文件不会被删除。
 {{ if eq .chezmoi.os "darwin" }}
+.config/chezmoi-sync/software-versions-zte.md
 .config/opencode/opencode.jsonc
 .config/opencode/commands
 .config/opencode/skills/icenter-page-guide
 .config/opencode/skills/query-icenter-knowledge-before-action
 .config/opencode/skills/save-knowledge-in-icenter
+.pi/agent/skills/icenter-page-guide
+.pi/agent/skills/query-icenter-knowledge-before-action
+.pi/agent/skills/save-knowledge-in-icenter
 .config/pip/pip.conf
 .config/uv/uv.toml
 .config/ty/ty.toml
