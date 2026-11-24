@@ -1,6 +1,6 @@
 # Chezmoi-managed software versions (zte)
 
-Generated: 2026-11-19T14:29:29+0800
+Generated: 2026-11-24T15:48:23+0800
 
 Scope: all ZTE machines; no standalone Mac access.
 
@@ -50,7 +50,7 @@ Scope: all ZTE machines; no standalone Mac access.
 | `neovide` | NOT_FOUND | - |
 | `nvim` | OK | NVIM v0.12.3 |
 | `opencode` | OK | opencode v2.1.4 |
-| `pi` | OK | 1.5.2 |
+| `pi` | OK | 1.6.0 |
 | `pip3` | OK | pip 25.3 from /home/zte/.local/lib/python3.10/site-packages/pip (python 3.10) |
 | `ruff` | OK | ruff 0.16.4 |
 | `tmux` | OK | tmux 3.8 |
@@ -77,7 +77,7 @@ Scope: all ZTE machines; no standalone Mac access.
 | `neovide` | NOT_FOUND | - |
 | `nvim` | OK | NVIM v0.12.5 |
 | `opencode` | OK | opencode v2.1.4 |
-| `pi` | OK | 1.5.2 |
+| `pi` | OK | 1.6.0 |
 | `pip3` | OK | pip 26.0.1 from /usr/local/Python3.10.15/lib/python3.10/site-packages/pip (python 3.10) |
 | `ruff` | OK | ruff 0.16.10 |
 | `tmux` | OK | tmux 3.7c |
@@ -88,7 +88,7 @@ Scope: all ZTE machines; no standalone Mac access.
 ## 18host
 
 - Hostname: `ubuntu22-sv18`
-- Kernel: `Linux 5.15.0-203-generic x86_64`
+- Kernel: `Linux 5.15.0-204-generic x86_64`
 
 | Tool | Status | Version |
 | --- | --- | --- |
@@ -104,7 +104,7 @@ Scope: all ZTE machines; no standalone Mac access.
 | `neovide` | NOT_FOUND | - |
 | `nvim` | OK | NVIM v0.12.5 |
 | `opencode` | OK | opencode v2.1.4 |
-| `pi` | OK | 1.5.2 |
+| `pi` | OK | 1.6.0 |
 | `pip3` | OK | pip 26.2 from /usr/local/Python3.10.15/lib/python3.10/site-packages/pip (python 3.10) |
 | `ruff` | NOT_FOUND | - |
 | `tmux` | OK | tmux 3.8 |
@@ -131,7 +131,7 @@ Scope: all ZTE machines; no standalone Mac access.
 | `neovide` | NOT_FOUND | - |
 | `nvim` | OK | NVIM v0.12.6 |
 | `opencode` | OK | opencode v2.2.7 |
-| `pi` | OK | 1.5.2 |
+| `pi` | OK | 1.6.0 |
 | `pip3` | OK | pip 22.0.2 from /usr/lib/python3/dist-packages/pip (python 3.10) |
 | `ruff` | OK | ruff 0.17.1 |
 | `tmux` | OK | tmux 3.8 |
