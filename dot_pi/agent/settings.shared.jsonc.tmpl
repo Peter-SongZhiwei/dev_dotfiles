@@ -14,7 +14,9 @@
     // Native Starship-style footer, configured through /starship.
     "npm:@narumitw/pi-starship",
     // Language learning with writing feedback and bilingual translations.
-    "npm:pi-language-tutor",
+    // Linux/ZTE machines use the local fork with click-to-collapse widgets and no upstream updates;
+    // macOS keeps the published package.
+    {{ if eq .chezmoi.os "darwin" }}"npm:pi-language-tutor",{{ else }}"{{ .chezmoi.homeDir }}/.pi/agent/local/pi-language-tutor",{{ end }}
     // Permission gates for sensitive files and external writes.
     "npm:@gotgenes/pi-permission-system",
     // Provider usage, limits, balances, and Codex Fast mode.
