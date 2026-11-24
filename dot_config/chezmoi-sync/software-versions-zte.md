@@ -1,6 +1,6 @@
 # Chezmoi-managed software versions (zte)
 
-Generated: 2026-11-24T16:03:05+0800
+Generated: 2026-11-24T16:14:09+0800
 
 Scope: all ZTE machines; no standalone Mac access.
 
