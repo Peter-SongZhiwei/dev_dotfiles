@@ -1,0 +1,88 @@
+{
+  "$schema": "https://pi.dev/schemas/models.schema.json",
+  "providers": {
+    "maas-deepseek": {
+      "name": "MaaS DeepSeek",
+      "baseUrl": "https://nebulacoder-maas.zte.com.cn/v1",
+      "api": "openai-completions",
+      "apiKey": "$ZTE_MAAS_API_KEY",
+      "models": [
+        {
+          "id": "deepseek-v4-flash",
+          "name": "deepseek-v4-flash",
+          "reasoning": true,
+          "thinkingLevelMap": {
+            "off": "low",
+            "minimal": "low",
+            "low": "low",
+            "medium": "high",
+            "high": "high",
+            "xhigh": "xhigh",
+            "max": "max"
+          },
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 262144,
+          "maxTokens": 65536,
+          "samplingParams": {
+            "chat_template_kwargs": {
+              "enable_thinking": true
+            },
+            "reasoning_effort": "max"
+          },
+          "samplingParamsByThinkingLevel": {
+            "off": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "reasoning_effort": "low"
+            },
+            "minimal": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "reasoning_effort": "low"
+            },
+            "low": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "reasoning_effort": "low"
+            },
+            "medium": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "reasoning_effort": "high"
+            },
+            "high": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "reasoning_effort": "high"
+            },
+            "xhigh": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "reasoning_effort": "xhigh"
+            },
+            "max": {
+              "chat_template_kwargs": {
+                "enable_thinking": true
+              },
+              "reasoning_effort": "max"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

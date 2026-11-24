@@ -1,0 +1,4 @@
+# ZTE machines reach the internal Artifactory, not the public npm registry.
+# Bun and npm both read this file, so Pi's package updates and extension
+# installs resolve here instead of timing out against registry.npmjs.org.
+registry=https://artsz.zte.com.cn/artifactory/api/npm/public-npm-virtual/

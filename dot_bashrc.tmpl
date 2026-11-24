@@ -1,13 +1,9 @@
 # ========================================
-#  guard & functions
+#  environment for every shell
 # ========================================
-# If not running interactively, don't do anything
-case $- in
-*i*) ;;
-*) return ;;
-esac
-
-# 头上添加
+# Keep this section free of interactive-only work: ssh one-liners, cron jobs
+# and scripts return from the file below before the prompt configuration runs,
+# so PATH, proxy settings and secrets have to be set here to be usable there.
 path_add() {
   case ":$PATH:" in
     *":$1:"*) ;;
@@ -22,41 +18,24 @@ ld_libary_path_add() {
     *) export LD_LIBRARY_PATH="$1:$LD_LIBRARY_PATH" ;;
   esac
 }
-# ========================================
-#  user shell configuration
-# ========================================
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
+
+# Machine-specific overrides (USER_TAG, SDK path, proxy port, ...). ~/.bashrc.local is NOT managed by chezmoi.
+[ -f "$HOME/.bashrc.local" ] && source "$HOME/.bashrc.local"
 
 # User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
-then
-    path_add "$HOME/.local/bin"
-    path_add "$HOME/bin"
+path_add "$HOME/.local/bin"
+path_add "$HOME/bin"
+path_add "$HOME/.local/lib/node_modules"
+
+# Bun and globally installed tools such as Pi
+if [ -d "$HOME/.bun/bin" ]; then
+  path_add "$HOME/.bun/bin"
 fi
 
-if ! [[ "$PATH" =~ "$HOME/.local/lib/node_modules:" ]]
-then
-    path_add "$HOME/.local/lib/node_modules"
+# opencode
+if [ -d "$HOME/.opencode/bin" ]; then
+  path_add "$HOME/.opencode/bin"
 fi
-
-export PATH
-export EDITOR="nvim"
-export HISTSIZE=100000
-export HISTFILESIZE=100000
-# 每次执行prompt -r 读 history
-# export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
-
-# shell option
-if (( BASH_VERSINFO[0] >= 4 )); then
-    shopt -s autocd # 路径自动cd
-fi
-shopt -s cdspell    # 自动纠正小拼写错误
-
-# Machine-specific overrides (SDK path, proxy port, ...). ~/.bashrc.local is NOT managed by chezmoi.
-[ -f "$HOME/.bashrc.local" ] && source "$HOME/.bashrc.local"
 
 {{ if ne .chezmoi.os "darwin" -}}
 # ========================================
@@ -92,22 +71,40 @@ if [ -n "${PROXY_PORT:-}" ]; then
 fi
 {{ end -}}
 
-# opencode tui 解压到/tmp再dlopen /tmp为noexec
-export TMPDIR=~/.cache/tmp
-
-if [ -f "$HOME/.cargo/env" ]; then
-    . "$HOME/.cargo/env"
+export PATH
+if [ -n "${LD_LIBRARY_PATH:-}" ]; then
+    export LD_LIBRARY_PATH
 fi
 
-# opencode
-if [ -d "$HOME/.opencode/bin" ]; then
-    path_add "$HOME/.opencode/bin"
+# ========================================
+#  guard
+# ========================================
+# If not running interactively, don't do anything below this point.
+case $- in
+*i*) ;;
+*) return ;;
+esac
+
+# ========================================
+#  user shell configuration
+# ========================================
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
 fi
 
-# Bun and globally installed tools such as Pi
-if [ -d "$HOME/.bun/bin" ]; then
-    path_add "$HOME/.bun/bin"
+export EDITOR="nvim"
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+# 每次执行prompt -r 读 history
+# export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
+
+# shell option
+if (( BASH_VERSINFO[0] >= 4 )); then
+    shopt -s autocd # 路径自动cd
 fi
+shopt -s cdspell    # 自动纠正小拼写错误
+
 {{ if and (eq .chezmoi.os "darwin") (not (env "USER_TAG")) }}
 # Select mise versions before initializing fzf, Starship, and zoxide.
 # Starship may already be calling the mise hook when this file is re-sourced.
@@ -126,8 +123,8 @@ fi
 # bash 默认的 transpose-chars 保持可用。
 FZF_CTRL_T_COMMAND=
 eval "$(fzf --bash)" # 已同时包含 key-bindings.bash 和 completion.bash
-# Keep Ctrl-L clearing the terminal even if an initialization script changes Readline bindings.
-bind '"\C-l": clear-screen'
+# Clear with Alt-L; Ctrl-L stays with tmux/nvim pane navigation.
+bind '"\el": clear-screen'
 export FZF_DEFAULT_OPTS='--height 40% --layout=default --info=inline'
 
 # starship只初始化一次
@@ -138,3 +135,10 @@ fi
 eval "$(zoxide init bash)" # zoxide放到最后
 
 source ~/.bash_aliases
+
+# opencode tui 解压到/tmp再dlopen /tmp为noexec
+export TMPDIR=~/.cache/tmp
+
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi

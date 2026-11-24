@@ -22,6 +22,14 @@ README.md
 .config/Code/Crashpad
 .config/Code/logs
 
+# SSH/headless 主机不管理桌面配置；桌面机器在 ~/.config/chezmoi/chezmoi.toml
+# 里设置 [data] desktop = true 才启用 VS Code 的 User 配置管理
+{{ if not (index . "desktop") }}.config/Code/**{{ end }}
+
+# 备份文件（例如 gitui/编辑器生成的 *.bak.<时间戳>）
+**/*.bak
+**/*.bak.*
+
 # Chezmoi 自身状态（不同机器不同，勿入库）
 .config/chezmoi
 
@@ -33,6 +41,19 @@ README.md
 .pi/agent/npm
 .pi/agent/web-search-cache
 .pi/agent/.git
+# Pi runtime state, installs and caches (configuration lives in settings.shared.jsonc/models.json)
+.pi/agent/install
+.pi/agent/bin
+.pi/agent/tmp
+.pi/agent/pi-web-access
+.pi/agent/trust.json
+.pi/agent/pi-subagents
+.pi/agent/session-migrate
+.pi/agent/crashes.json
+.pi/agent/pi-debug.log
+.pi/agent/*.bak
+.pi/agent/flashcards.json
+.pi/agent/language-learn.json
 
 # MacBook 不部署仅适用于 ZTE 环境的配置或员工信息；本地已有文件不会被删除。
 {{ if eq .chezmoi.os "darwin" }}
@@ -48,6 +69,13 @@ README.md
 .config/pip/pip.conf
 .config/uv/uv.toml
 .config/ty/ty.toml
+# macOS uses the public npm registry; ~/.npmrc (Artifactory) is ZTE-only.
+.npmrc
+# The MaaS provider in models.json points at an internal endpoint.
+.pi/agent/models.json
+# macOS uses the published tutor package, not the ZTE local fork.
+.pi/agent/local/pi-language-tutor
+.pi/agent/local/pi-language-tutor/**
 {{ end }}
 
 # The standalone Mac owns its mise defaults and version report.

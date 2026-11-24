@@ -23,6 +23,20 @@ map('n', 'K', ':m .-2<CR>==', { desc = '交换行与上一行' })
 map('n', '<A-j>', ':m .+1<CR>==', { desc = '交换行与下一行' })
 map('n', 'J', ':m .+1<CR>==', { desc = '交换行与下一行' })
 
+-- Clear highlights, refresh diffs and redraw the whole screen; this matches the
+-- built-in Ctrl-L behaviour so Ctrl-L can stay dedicated to pane navigation.
+map({ 'n', 'i', 'v' }, '<A-l>', '<Cmd>nohlsearch<Bar>diffupdate<Bar>mode<Cr>',
+    { desc = 'Clear screen', silent = true })
+
+-- Reload the current buffer from disk, asking first when there are unsaved edits.
+map('n', '<A-r>', function()
+    if vim.bo.modified then
+        local choice = vim.fn.confirm('Discard changes and reload from disk?', '&Yes\n&No', 2)
+        if choice ~= 1 then return end
+    end
+    vim.cmd('edit!')
+end, { desc = 'Reload file from disk' })
+
 map("x", "<LeftRelease>", '<LeftRelease>"+y', { desc = "Copy mouse selection to clipboard" })
 map("v", "<c-c>", '"+y', { desc = "Copy to clipboard", silent = false })
 map("i", "<c-v>", function()

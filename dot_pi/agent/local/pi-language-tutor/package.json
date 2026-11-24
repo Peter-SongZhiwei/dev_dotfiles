@@ -1,0 +1,34 @@
+{
+  "name": "pi-language-tutor",
+  "version": "0.5.1",
+  "description": "Pi extension for learning a foreign language while coding: background writing feedback (spelling, grammar, natural phrasing) on your prompts and bilingual translation of assistant responses",
+  "type": "module",
+  "license": "MIT",
+  "main": "language-learn.ts",
+  "files": [
+    "language-learn.ts",
+    "src",
+    "web",
+    "types"
+  ],
+  "pi": {
+    "extensions": [
+      "./language-learn.ts"
+    ]
+  },
+  "image": "https://raw.githubusercontent.com/mackt/pi-language-tutor/main/docs/writing-check.png",
+  "keywords": [
+    "pi",
+    "pi-package",
+    "pi-extension",
+    "language-learning"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mackt/pi-language-tutor.git"
+  },
+  "dependencies": {
+    "glimpseui": "^0.8.1",
+    "ts-fsrs": "^5.4.1"
+  }
+}
