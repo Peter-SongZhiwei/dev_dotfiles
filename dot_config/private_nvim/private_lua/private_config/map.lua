@@ -23,6 +23,11 @@ map('n', 'K', ':m .-2<CR>==', { desc = '交换行与上一行' })
 map('n', '<A-j>', ':m .+1<CR>==', { desc = '交换行与下一行' })
 map('n', 'J', ':m .+1<CR>==', { desc = '交换行与下一行' })
 
+-- Clear highlights and force a redraw; mirrors Alt-L clear-screen in the shell
+-- so Ctrl-L can stay dedicated to pane navigation.
+map({ 'n', 'i', 'v' }, '<A-l>', '<Cmd>nohlsearch<Bar>redraw!<Cr>',
+    { desc = 'Clear screen', silent = true })
+
 map("x", "<LeftRelease>", '<LeftRelease>"+y', { desc = "Copy mouse selection to clipboard" })
 map("v", "<c-c>", '"+y', { desc = "Copy to clipboard", silent = false })
 map("i", "<c-v>", function()
