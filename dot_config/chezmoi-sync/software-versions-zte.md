@@ -1,6 +1,6 @@
 # Chezmoi-managed software versions (zte)
 
-Generated: 2026-11-24T15:48:23+0800
+Generated: 2026-11-24T16:03:05+0800
 
 Scope: all ZTE machines; no standalone Mac access.
 
@@ -23,7 +23,7 @@ Scope: all ZTE machines; no standalone Mac access.
 | `neovide` | OK | neovide 0.16.2 |
 | `nvim` | OK | NVIM v0.12.5 |
 | `opencode` | OK | opencode v2.1.4 |
-| `pi` | OK | 1.5.2 |
+| `pi` | OK | 1.6.0 |
 | `pip3` | OK | pip 9.0.3 from /usr/lib/python3.6/site-packages (python 3.6) |
 | `ruff` | OK | ruff 0.16.10 |
 | `tmux` | OK | tmux 3.8 |

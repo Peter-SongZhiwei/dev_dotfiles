@@ -22,8 +22,13 @@ README.md
 .config/Code/Crashpad
 .config/Code/logs
 
-# 排除 VS Code 配置（SSH/headless 主机不管理桌面配置）
-.config/Code/**
+# SSH/headless 主机不管理桌面配置；桌面机器在 ~/.config/chezmoi/chezmoi.toml
+# 里设置 [data] desktop = true 才启用 VS Code 的 User 配置管理
+{{ if not (index . "desktop") }}.config/Code/**{{ end }}
+
+# 备份文件（例如 gitui/编辑器生成的 *.bak.<时间戳>）
+**/*.bak
+**/*.bak.*
 
 # Chezmoi 自身状态（不同机器不同，勿入库）
 .config/chezmoi
