@@ -48,6 +48,8 @@ README.md
 .config/pip/pip.conf
 .config/uv/uv.toml
 .config/ty/ty.toml
+# macOS uses the public npm registry; ~/.npmrc (Artifactory) is ZTE-only.
+.npmrc
 {{ end }}
 
 # starship 主题/配置按机器自定义，不用 chezmoi 管理
