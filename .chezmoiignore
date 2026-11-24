@@ -50,6 +50,12 @@ README.md
 .config/ty/ty.toml
 {{ end }}
 
+# The standalone Mac owns its mise defaults and version report.
+{{ if or (ne .chezmoi.os "darwin") (env "USER_TAG") }}
+.config/mise/config.toml
+.config/chezmoi-sync/software-versions-mac.md
+{{ end }}
+
 # starship 主题/配置按机器自定义，不用 chezmoi 管理
 .config/starship.toml
 

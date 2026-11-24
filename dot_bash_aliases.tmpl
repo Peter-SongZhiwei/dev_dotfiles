@@ -219,9 +219,9 @@ versions() {
         # 2) 开发基础工具 (dev basics)
         # 3) 其他 (others)
         set -- \
-            python3 node npm rustc cargo gcc clang ruff ty \
+            python3 node npm bun rustc cargo gcc clang ruff ty \
             bash git cmake tmux nvim rg fd fzf curl \
-            uv opencode chezmoi
+            mise uv opencode chezmoi
     fi
     printf '%-16s %-12s %s\n' 'TOOL' 'STATUS' 'VERSION'
     printf '%-16s %-12s %s\n' '----------------' '------------' '-------'
@@ -233,8 +233,8 @@ versions() {
             # java) cmd=(java -version) ;;
             tmux) cmd=(tmux -V) ;;
             git|gcc|g++|clang|clang++|cmake|python|python3|bash|\
-            node|npm|rustc|cargo|nvim|rg|fd|fzf|curl|\
-            uv|ruff|ty|opencode|chezmoi)
+            node|npm|bun|rustc|cargo|nvim|rg|fd|fzf|curl|\
+            mise|uv|ruff|ty|opencode|chezmoi)
                 cmd=("$tool" --version) ;;
             *)
                 printf '%-16s %-12s %s\n' \

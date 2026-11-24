@@ -3,8 +3,15 @@ return {
   -- Prebuilt binaries may require a newer glibc than the host provides.
   -- Use our own wait so lazy.nvim's 120-second limit cannot stop a fresh build.
   build = function(plugin)
+    local cargo = vim.fn.exepath('cargo')
+    if cargo == '' then
+      cargo = vim.fn.expand('~/.cargo/bin/cargo')
+      if vim.fn.executable(cargo) ~= 1 then
+        error('fff.nvim build needs Cargo; add it to PATH or install rustup')
+      end
+    end
     local result = vim.system({
-      vim.env.HOME .. '/.cargo/bin/cargo',
+      cargo,
       'build',
       '--release',
       '-p',

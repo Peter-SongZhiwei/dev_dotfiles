@@ -92,6 +92,29 @@ if [ -n "${PROXY_PORT:-}" ]; then
 fi
 {{ end -}}
 
+# opencode tui 解压到/tmp再dlopen /tmp为noexec
+export TMPDIR=~/.cache/tmp
+
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
+
+# opencode
+if [ -d "$HOME/.opencode/bin" ]; then
+    path_add "$HOME/.opencode/bin"
+fi
+
+# Bun and globally installed tools such as Pi
+if [ -d "$HOME/.bun/bin" ]; then
+    path_add "$HOME/.bun/bin"
+fi
+{{ if and (eq .chezmoi.os "darwin") (not (env "USER_TAG")) }}
+# Select mise versions before initializing fzf, Starship, and zoxide.
+# Starship may already be calling the mise hook when this file is re-sourced.
+if command -v mise >/dev/null 2>&1 && ! declare -F _mise_hook >/dev/null; then
+    eval "$(mise activate bash)"
+fi
+{{ end }}
 # ========================================
 #  tools initiation && configuration 
 # ========================================
@@ -115,20 +138,3 @@ fi
 eval "$(zoxide init bash)" # zoxide放到最后
 
 source ~/.bash_aliases
-
-# opencode tui 解压到/tmp再dlopen /tmp为noexec
-export TMPDIR=~/.cache/tmp
-
-if [ -f "$HOME/.cargo/env" ]; then
-    . "$HOME/.cargo/env"
-fi
-
-# opencode
-if [ -d "$HOME/.opencode/bin" ]; then
-    path_add "$HOME/.opencode/bin"
-fi
-
-# Bun and globally installed tools such as Pi
-if [ -d "$HOME/.bun/bin" ]; then
-    path_add "$HOME/.bun/bin"
-fi
