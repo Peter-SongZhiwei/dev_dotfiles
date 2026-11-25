@@ -6,6 +6,7 @@ return {
         config = function()
             local treesitter = require("nvim-treesitter")
             treesitter.setup({})
+            -- install when open nvim
             local should_install = {
                 "bash",
                 "c",
