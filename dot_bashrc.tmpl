@@ -105,6 +105,13 @@ if (( BASH_VERSINFO[0] >= 4 )); then
 fi
 shopt -s cdspell    # 自动纠正小拼写错误
 
+{{ if and (eq .chezmoi.os "darwin") (not (env "USER_TAG")) }}
+# Select mise versions before initializing fzf, Starship, and zoxide.
+# Starship may already be calling the mise hook when this file is re-sourced.
+if command -v mise >/dev/null 2>&1 && ! declare -F _mise_hook >/dev/null; then
+    eval "$(mise activate bash)"
+fi
+{{ end }}
 # ========================================
 #  tools initiation && configuration 
 # ========================================

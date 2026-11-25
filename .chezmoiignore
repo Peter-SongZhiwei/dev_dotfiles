@@ -73,6 +73,15 @@ README.md
 .npmrc
 # The MaaS provider in models.json points at an internal endpoint.
 .pi/agent/models.json
+# macOS uses the published tutor package, not the ZTE local fork.
+.pi/agent/local/pi-language-tutor
+.pi/agent/local/pi-language-tutor/**
+{{ end }}
+
+# The standalone Mac owns its mise defaults and version report.
+{{ if or (ne .chezmoi.os "darwin") (env "USER_TAG") }}
+.config/mise/config.toml
+.config/chezmoi-sync/software-versions-mac.md
 {{ end }}
 
 # starship 主题/配置按机器自定义，不用 chezmoi 管理

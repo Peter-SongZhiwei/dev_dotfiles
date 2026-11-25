@@ -19,9 +19,10 @@ readonly -a ZTE_MACHINES=(
 # Keep this inventory aligned with ~/.config, ~/.bash*, and ~/.pi/agent.
 # btm is Bottom's executable; pip3 uses ~/.config/pip/pip.conf.
 readonly -a TOOLS=(
-    chezmoi bash
-    btm code eza fzf gitui htop navi neovide nvim opencode pi pip3
-    ruff tmux ty uv yazi
+    chezmoi bash mise
+    node npm bun python3 pip3
+    bat btm btop code delta eza fd fzf gitui gum htop navi neovide nvim
+    opencode pi rg ruff starship tmux tuicr ty uv yazi zellij zoxide
 )
 
 usage() {
@@ -52,6 +53,18 @@ add_tool_directories_to_path() {
         [[ ":$PATH:" == *":$directory:"* ]] || PATH="$directory:$PATH"
     done
     export PATH
+}
+
+add_mise_directories_to_path() {
+    local directories directory mise_path=
+    command -v mise >/dev/null 2>&1 || return 0
+
+    # Inventory the user's defaults, not the versions from the caller's project.
+    directories=$(mise -C "$HOME" env --paths) || return 0
+    while IFS= read -r directory; do
+        [[ -n "$directory" ]] && mise_path+="$directory:"
+    done <<< "$directories"
+    export PATH="$mise_path$PATH"
 }
 
 query_version() {
@@ -255,6 +268,7 @@ main() {
     done
 
     add_tool_directories_to_path
+    add_mise_directories_to_path
     if [[ "$mode" == local ]]; then
         local_report "$machine"
         return

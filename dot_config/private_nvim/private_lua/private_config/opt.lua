@@ -2,6 +2,11 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 local opt = vim.opt
 
+-- Use Tree-sitter folds, but leave them open when a buffer is first displayed.
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldlevelstart = 99
+
 -- search
 opt.ignorecase = true
 opt.smartcase = true
