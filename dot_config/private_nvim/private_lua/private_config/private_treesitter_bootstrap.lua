@@ -85,28 +85,51 @@ local function notify(msg, level)
     end)
 end
 
+--- 先写临时文件再原子 rename：中途被杀也不会留下半损二进制
+--- @param url string 下载地址（curl 支持的任意协议，含 file://）
+--- @param target string 最终路径
+local function atomic_download(url, target, done)
+    local tmp = target .. ".tmp"
+    vim.uv.fs_unlink(tmp) -- 清掉上一次中断的残留
+    log(("下载 %s -> %s"):format(url, target))
+    vim.system(
+        { "bash", "-c", ("mkdir -p %s && curl -sSfL %s | gunzip > %s && chmod +x %s"):format(vim.fs.dirname(target), url, tmp, tmp) },
+        { text = true },
+        function(r)
+            if r.code ~= 0 then
+                vim.uv.fs_unlink(tmp)
+                return done(false, vim.trim(r.stderr or ""))
+            end
+            local ok, err = vim.uv.fs_rename(tmp, target)
+            if not ok then
+                vim.uv.fs_unlink(tmp)
+                return done(false, "rename 失败: " .. tostring(err))
+            end
+            done(true, nil)
+        end
+    )
+end
+
 --- 安装策略：run(done) 必须异步回调，绝不 :wait()，避免卡住编辑器
 local strategies = {
     {
         name = "官方预编译资产(glibc>=2.35)",
+        hint = "通常几秒",
         available = function()
             local minor = glibc_minor()
             return minor ~= nil and minor >= 35
         end,
         run = function(done)
-            local url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.27.2/tree-sitter-linux-x64.gz"
-            local target = vim.fs.joinpath(BIN_DIR, "tree-sitter")
-            vim.system(
-                { "bash", "-c", ("mkdir -p %s && curl -sSfL %s | gunzip > %s && chmod +x %s"):format(BIN_DIR, url, target, target) },
-                { text = true },
-                function(r)
-                    done(r.code == 0, vim.trim(r.stderr or ""))
-                end
+            atomic_download(
+                "https://github.com/tree-sitter/tree-sitter/releases/download/v0.27.2/tree-sitter-linux-x64.gz",
+                vim.fs.joinpath(BIN_DIR, "tree-sitter"),
+                done
             )
         end,
     },
     {
         name = "cargo 源码编译",
+        hint = "约 2~5 分钟",
         available = function()
             return vim.fn.executable("cargo") == 1 and vim.fn.executable("cc") == 1
         end,
@@ -122,6 +145,7 @@ local strategies = {
     },
     {
         name = "rustup 引导后源码编译",
+        hint = "可能 5~15 分钟（含下载 Rust 工具链）",
         available = function()
             local minor = glibc_minor()
             return minor ~= nil and minor >= 17 and vim.fn.executable("cc") == 1
@@ -174,6 +198,9 @@ local function try_strategy(list, index, opts)
     end
 
     log(("尝试策略: %s"):format(strategy.name))
+    if opts.notify and strategy.hint then
+        notify(("正在%s（%s）… 完成前请保持 nvim 打开"):format(strategy.name, strategy.hint), vim.log.levels.INFO)
+    end
     strategy.run(function(ok, detail)
         vim.schedule(function()
             if ok then
@@ -216,12 +243,17 @@ function M.ensure(opts)
     state.running = true
     log("CLI 缺失，启动后台安装链")
     if opts.notify then
-        notify("缺少 tree-sitter CLI，正在后台安装（不阻塞编辑器，稍后自动编译语法）…", vim.log.levels.WARN)
+        notify(
+            "缺少 tree-sitter CLI，正在后台安装（不阻塞编辑；完成前请保持 nvim 打开，装好后会自动编译语法）…",
+            vim.log.levels.WARN
+        )
     end
     vim.schedule(function()
         try_strategy(opts.strategies, 1, opts)
     end)
     return false
 end
+
+M._atomic_download = atomic_download -- 供测试使用
 
 return M
