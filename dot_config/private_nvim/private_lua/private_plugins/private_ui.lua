@@ -51,7 +51,12 @@ return {
             sections = {
                 lualine_a = { "mode" },
                 lualine_b = { "diff", "diagnostics" },
-                lualine_c = { "%S" },
+                lualine_c = {
+                    -- Path of the current buffer relative to the working directory,
+                    -- so it stays meaningful without showing the absolute home path.
+                    { "filename", path = 1, symbols = { modified = " ●", unnamed = "[No Name]" } },
+                    "%S", -- showcmd: pending command stays in the statusline (cmdheight = 0)
+                },
                 lualine_x = { "encoding", "fileformat", "filetype" },
                 lualine_y = { "progress" },
                 lualine_z = { "branch" },

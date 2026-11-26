@@ -1,0 +1,25 @@
+{
+	// Keep built-in Vintage disabled; NeoVintageous provides the Vim emulation.
+	"ignored_packages": ["Vintage",		"Vintageous",
+	],
+
+	// ---- NeoVintageous (Vim mode) ----
+	// Modes: normal, visual (v), visual line (V), visual block (Ctrl+V), insert.
+	// Word motions e/E/b/B work out of the box.
+	// Docs: https://neovintageous.github.io/reference/settings
+	// vintageous_default_mode: null (normal), "insert", or "visual" — default null = start in normal.
+	"vintageous_use_sys_clipboard": true,
+
+	// Let Sublime handle Ctrl+C as the normal copy command instead of
+	// NeoVintageous mapping it to <Esc>. Add more keys here the same way if
+	// wanted, e.g. "<C-v>": false (Ctrl+V paste instead of visual block).
+	"vintageous_handle_keys": {
+		"<C-c>": false,
+	},
+	"vintageous_bell": "view",
+	"vintageous_highlighted_yank": true,
+	"vintageous_enable_surround": true,
+	"vintageous_enable_commentary": true,
+	"neovintageous_build_version": 13200,
+	"font_size": 12,
+}

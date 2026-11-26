@@ -24,7 +24,11 @@ README.md
 
 # SSH/headless 主机不管理桌面配置；桌面机器在 ~/.config/chezmoi/chezmoi.toml
 # 里设置 [data] desktop = true 才启用 VS Code 的 User 配置管理
-{{ if not (index . "desktop") }}.config/Code/**{{ end }}
+{{ if not (index . "desktop") }}
+.config/Code/**
+# Sublime Text 同样是桌面编辑器，无图形界面的机器不部署其配置
+.config/sublime-text/**
+{{ end }}
 
 # 备份文件（例如 gitui/编辑器生成的 *.bak.<时间戳>）
 **/*.bak
