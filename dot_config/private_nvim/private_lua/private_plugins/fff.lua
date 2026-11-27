@@ -3,7 +3,8 @@ return {
     -- The upstream build hook and lazy.nvim both cap builds at 120 seconds,
     -- which a cold Rust build on this host exceeds. config.fff_build tries the
     -- prebuilt library first, checks it against the host glibc, and otherwise
-    -- compiles from source without a timeout.
+    -- compiles from source without a timeout. See that file for when a rebuild
+    -- happens and why the prebuilt is rejected on glibc 2.28 hosts.
     build = function(plugin)
         require('config.fff_build').build(plugin)
     end,

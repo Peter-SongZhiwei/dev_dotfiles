@@ -13,7 +13,6 @@ readonly -a ZTE_MACHINES=(
     '187vm|187vm|187vm'
     '187host|baseband-ironic-64c512g-ubuntu-022|187host'
     '18host|ubuntu22-sv18|18host'
-    '18vm|dev|18vm'
 )
 
 # Keep this inventory aligned with ~/.config, ~/.bash*, and ~/.pi/agent.

@@ -10,6 +10,21 @@
 -- This module owns the whole build instead: it prefers the prebuilt library,
 -- rejects it when its glibc requirement exceeds the host's, and otherwise
 -- compiles through vim.system():wait(), which has no timeout.
+--
+-- When this hook runs at all: lazy.nvim's plugin.build task only fires for a
+-- plugin marked dirty, i.e. after a fresh clone, after a commit change from
+-- :Lazy update / :Lazy sync / :Lazy restore, or for an explicit :Lazy build fff.
+-- Plain starts, :Lazy clean, and updates that leave fff's commit untouched skip
+-- it. FFF_FORCE_BUILD=1 disables the up-to-date check below.
+--
+-- Why the prebuilt is normally rejected on the ZTE machines:
+--   * upstream builds the linux-gnu asset with cargo-zigbuild against glibc
+--     2.31 (.github/workflows/release.yaml, zigbuild_target
+--     "x86_64-unknown-linux-gnu.2.31"), while those hosts provide glibc 2.28;
+--     the downloaded binary tops out at GLIBC_2.30, so it is always refused and
+--     every fff commit change costs a full cargo rebuild (minutes, not seconds)
+--   * the linux-musl asset is not a workaround: it links against musl's loader
+--     and fails to load on a glibc host with "/lib64/libc.so: invalid ELF header"
 
 local M = {}
 
