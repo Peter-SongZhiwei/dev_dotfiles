@@ -34,7 +34,8 @@ Management Scope
 3. Synchronization
 
 * Classify machines before synchronization. A non-empty `USER_TAG` selects ZTE scope; macOS with `USER_TAG` empty or unset selects standalone Mac scope.
-* ZTE synchronization includes all five ZTE machines (`NewStarOS`, `187vm`, `187host`, `18host`, and `18vm`) through GitHub and SSH. Every ZTE sync or chezmoi push triggers the full five-machine ZTE workflow.
+* ZTE synchronization includes all four ZTE machines (`NewStarOS`, `187vm`, `187host`, and `18host`) through GitHub and SSH. Every ZTE sync or chezmoi push triggers the full four-machine ZTE workflow.
+* `18vm` was retired on 2026-11-27 and is no longer part of the ZTE scope. Do not include it in version checks, synchronizations, or reports.
 * The standalone Mac synchronizes only through GitHub and on itself. Never attempt SSH between the Mac and ZTE machines. A Mac push does not trigger immediate ZTE synchronization, and a ZTE push does not trigger immediate Mac synchronization; changes propagate when the other group next syncs.
 * Before syncing, generate only the current scope's version report: `software-versions-zte.md` for all ZTE machines or `software-versions-mac.md` for the Mac alone. Manage and publish each report with that scope's changes; never overwrite the other scope's report.
 * Treat chezmoi’s source state as the canonical repository of managed configuration.

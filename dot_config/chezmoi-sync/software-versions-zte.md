@@ -1,6 +1,6 @@
 # Chezmoi-managed software versions (zte)
 
-Generated: 2026-11-27T14:01:00+0800
+Generated: 2026-11-27T16:09:24+0800
 
 Scope: all ZTE machines; no standalone Mac access.
 
@@ -171,7 +171,3 @@ Scope: all ZTE machines; no standalone Mac access.
 | `yazi` | OK | Yazi 25.5.31 (b65a880 2025-05-30) |
 | `zellij` | OK | zellij 0.43.1 |
 | `zoxide` | OK | zoxide 0.9.8 |
-
-## 18vm
-
-**Version check failed:** passwordless SSH login failed or timed out.

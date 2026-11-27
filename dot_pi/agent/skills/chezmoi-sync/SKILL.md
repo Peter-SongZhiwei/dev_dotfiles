@@ -56,21 +56,20 @@ Keep this section aligned with `AGENTS.md` in the chezmoi source repository.
 
 ## Mandatory full sync on ZTE machines
 
-These rules apply whenever `USER_TAG` is non-empty. A request to "chezmoi sync" (or an equivalent general sync request) means the complete workflow below, not just a pull/apply. The current ZTE inventory is `NewStarOS`, `187vm`, `187host`, `18host`, and `18vm`; `NewStartOS` is normalized to the report label `NewStarOS`. **After every chezmoi change is pushed to GitHub from any ZTE machine, immediately perform the full synchronization on all five ZTE machines, even if the original request was only to commit and push. Never stop after `git push` or wait for a separate sync request.**
+These rules apply whenever `USER_TAG` is non-empty. A request to "chezmoi sync" (or an equivalent general sync request) means the complete workflow below, not just a pull/apply. The current ZTE inventory is `NewStarOS`, `187vm`, `187host`, and `18host`; `18vm` was retired on 2026-11-27 and is out of scope. `NewStartOS` is normalized to the report label `NewStarOS`. **After every chezmoi change is pushed to GitHub from any ZTE machine, immediately perform the full synchronization on all four ZTE machines, even if the original request was only to commit and push. Never stop after `git push` or wait for a separate sync request.**
 
 1. Complete the all-machine software version check in section 0 and review its Markdown report.
 2. Inspect and review the current machine's local changes, then add them to chezmoi using section 1. Home/target changes that should win must be re-added; intentional source-tree edits must be preserved.
 3. Commit only the intended changes in `~/.local/share/chezmoi` and push them to the GitHub chezmoi repository's `origin/main`. The sync request authorizes this commit and push. If there are no changes to publish, skip the commit and push.
-4. After publishing, fetch, merge, and apply the latest `origin/main` on all five machines, including the machine that pushed:
+4. After publishing, fetch, merge, and apply the latest `origin/main` on all four machines, including the machine that pushed:
    - `NewStarOS`
    - `187vm`
    - `187host`
    - `18host`
-   - `18vm`
 5. On each machine, after `chezmoi apply`, run `pi update --all` to update both Pi and all installed Pi packages.
-6. Verify `chezmoi status --include=files` is clean on every machine. Finish only when all five machines use the same GitHub revision and managed configuration and the Pi update has completed successfully.
+6. Verify `chezmoi status --include=files` is clean on every machine. Finish only when all four machines use the same GitHub revision and managed configuration and the Pi update has completed successfully.
 
-Run the update procedure on the current ZTE machine and the remote procedure on each of the other four ZTE machines. All safety rules below still apply, especially diff review, secret checks, and stopping for conflicts.
+Run the update procedure on the current ZTE machine and the remote procedure on each of the other three ZTE machines. All safety rules below still apply, especially diff review, secret checks, and stopping for conflicts.
 
 ## Standalone Mac GitHub-only sync
 
@@ -116,7 +115,7 @@ Preserve all macOS ignore/template rules. The OS-based guards exclude ZTE-specif
 
 ## 3. Update remote machines over SSH
 
-For every other ZTE machine required by the five-machine sync (for example, `ssh 187vm`). Never run this procedure for the standalone Mac:
+For every other ZTE machine required by the four-machine sync (for example, `ssh 187vm`). Never run this procedure for the standalone Mac:
 
 1. Test passwordless login first:
    ```bash
