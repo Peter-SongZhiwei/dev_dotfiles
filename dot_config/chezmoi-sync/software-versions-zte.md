@@ -1,6 +1,6 @@
 # Chezmoi-managed software versions (zte)
 
-Generated: 2026-11-26T20:06:16+0800
+Generated: 2026-11-27T14:01:00+0800
 
 Scope: all ZTE machines; no standalone Mac access.
 
@@ -34,7 +34,7 @@ Scope: all ZTE machines; no standalone Mac access.
 | `neovide` | OK | neovide 0.16.2 |
 | `nvim` | OK | NVIM v0.12.5 |
 | `opencode` | OK | opencode v2.1.4 |
-| `pi` | OK | 1.6.0 |
+| `pi` | OK | 1.6.1 |
 | `rg` | OK | ripgrep 15.2.0 (rev e89fff89ac) |
 | `ruff` | OK | ruff 0.16.10 |
 | `starship` | OK | starship 1.26.0 |
@@ -76,7 +76,7 @@ Scope: all ZTE machines; no standalone Mac access.
 | `neovide` | NOT_FOUND | - |
 | `nvim` | OK | NVIM v0.12.6 |
 | `opencode` | OK | opencode v2.2.7 |
-| `pi` | OK | 1.6.0 |
+| `pi` | OK | 1.6.1 |
 | `rg` | OK | ripgrep 15.2.0 (rev e89fff89ac) |
 | `ruff` | OK | ruff 0.17.1 |
 | `starship` | OK | starship 1.27.0 |
@@ -118,7 +118,7 @@ Scope: all ZTE machines; no standalone Mac access.
 | `neovide` | NOT_FOUND | - |
 | `nvim` | OK | NVIM v0.12.5 |
 | `opencode` | OK | opencode v2.1.4 |
-| `pi` | OK | 1.6.0 |
+| `pi` | OK | 1.6.1 |
 | `rg` | OK | ripgrep 15.1.0 (rev af60c2de9d) |
 | `ruff` | OK | ruff 0.16.10 |
 | `starship` | OK | starship 1.24.2 |
@@ -160,7 +160,7 @@ Scope: all ZTE machines; no standalone Mac access.
 | `neovide` | NOT_FOUND | - |
 | `nvim` | OK | NVIM v0.12.5 |
 | `opencode` | OK | opencode v2.1.4 |
-| `pi` | OK | 1.6.0 |
+| `pi` | OK | 1.6.1 |
 | `rg` | OK | ripgrep 15.1.0 (rev af60c2de9d) |
 | `ruff` | NOT_FOUND | - |
 | `starship` | OK | starship 1.24.2 |
