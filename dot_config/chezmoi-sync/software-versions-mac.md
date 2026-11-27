@@ -1,6 +1,6 @@
 # Chezmoi-managed software versions (mac)
 
-Generated: 2026-11-25T01:02:01+0800
+Generated: 2026-11-28T00:01:04+0800
 
 Scope: this standalone machine only; no ZTE machine access.
 
@@ -34,7 +34,7 @@ Scope: this standalone machine only; no ZTE machine access.
 | `neovide` | NOT_FOUND | - |
 | `nvim` | OK | NVIM v0.12.6 |
 | `opencode` | OK | opencode v2.2.7 |
-| `pi` | OK | 1.6.0 |
+| `pi` | OK | 1.6.1 |
 | `rg` | OK | ripgrep 15.2.0 (rev e89fff89ac) |
 | `ruff` | OK | ruff 0.17.4 |
 | `starship` | OK | starship 1.27.0 |
